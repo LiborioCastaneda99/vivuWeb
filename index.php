@@ -124,7 +124,7 @@
 							<div class="form-group col-md-9">
 								<label for="inputNombre4">Nombre</label>
 								<input type="text" class="form-control input-sm" id="cursoU" name="cursoU">
-								<input type="text" hidden="" id="idCurso" name="idCurso">
+								<input type="text" hidden="" id="idCursoU" name="idCursoU">
 							</div>
 							<div class="form-group col-md-3">
 								<label for="inputJornada4">Jornada</label>
@@ -202,7 +202,7 @@
 				url:"procesos/agregar.php",
 				success:function(r){
 					if(r==1){
-						$('#modalEditar').modal('toggle');
+						$('#agregarnuevosdatosmodal').modal('toggle');
 						$('#frmnuevo')[0].reset();
 						$('#tablaDatatable').load('tabla.php');
 						Swal.fire(
@@ -230,7 +230,7 @@
 				url:"procesos/actualizar.php",
 				success:function(r){
 					if(r==1){
-						$('#agregarnuevosdatosmodal').modal('toggle');
+						$('#modalEditar').modal('toggle');
 						$('#tablaDatatable').load('tabla.php');
 						Swal.fire(
 						'Correcto!',
@@ -264,7 +264,7 @@
 			url:"procesos/obtenDatos.php",
 			success:function(r){
 				datos=jQuery.parseJSON(r);
-				$('#idCurso').val(datos['id']);
+				$('#idCursoU').val(datos['id']);
 				$('#cursoU').val(datos['curso']);
 				$('#jornadaU').val(datos['jornada']);
 				$('#nombre_grupoU').val(datos['nombre_grupo']);

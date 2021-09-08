@@ -4,7 +4,7 @@
 	$obj= new crud();
 
 	$datos=array(
-				$_POST['idCurso'],
+				$_POST['idCursoU'],
 				$_POST['cursoU'],
 				$_POST['jornadaU'],
 				$_POST['nombre_grupoU'],
