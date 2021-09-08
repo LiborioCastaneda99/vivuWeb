@@ -4,7 +4,7 @@
 require_once "clases/conexion.php";
 $obj= new conectar();
 $conexion=$obj->conexion();
-$sql="SELECT id, codigo_curso, curso, jornada, horario, intensidad, fecha_inicio, municipio, direccion, formacion, centro, descripcion, nombre_grupo, estado FROM cursos where nombre_grupo='Artesanias' and estado='Activo'";
+$sql="SELECT id, codigo_curso, curso, jornada, horario, intensidad, fecha_inicio, municipio, direccion, formacion, centro, descripcion, nombre_grupo, estado FROM cursos where nombre_grupo='".$_GET['name_group']."' and estado='Activo'";
 $result=mysqli_query($conexion,$sql);
 
 ?>

@@ -5,6 +5,7 @@
 	<?php require_once "scripts.php";  ?>
 </head>
 <body>
+	<input type="hidden" value="<?php echo $_GET['name_group'] ?>" name= "valor" id="valor">
 	<div class="container">
 		<div class="row mt-4">
 			<div class="col-sm-12">
@@ -204,7 +205,8 @@
 					if(r==1){
 						$('#agregarnuevosdatosmodal').modal('toggle');
 						$('#frmnuevo')[0].reset();
-						$('#tablaDatatable').load('tabla.php');
+						let valor = $('#valor').val();
+						$('#tablaDatatable').load('tabla.php?name_group='+valor);
 						Swal.fire(
 						'Correcto!',
 						'Se ha guardado correctamente!',
@@ -231,7 +233,8 @@
 				success:function(r){
 					if(r==1){
 						$('#modalEditar').modal('toggle');
-						$('#tablaDatatable').load('tabla.php');
+						let valor = $('#valor').val();
+						$('#tablaDatatable').load('tabla.php?name_group='+valor);
 						Swal.fire(
 						'Correcto!',
 						'Se ha actualizado correctamente!',
@@ -252,7 +255,8 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		$('#tablaDatatable').load('tabla.php');
+		let valor = $('#valor').val();
+		$('#tablaDatatable').load('tabla.php?name_group='+valor);
 	});
 </script>
 
@@ -306,7 +310,8 @@
 				url:"procesos/eliminar.php",
 				success:function(r){
 					if(r==1){
-						$('#tablaDatatable').load('tabla.php');
+						let valor = $('#valor').val();
+						$('#tablaDatatable').load('tabla.php?name_group='+valor);
 						swalWithBootstrapButtons.fire(
 						'¡Eliminado!',
 						'El curso ha sido eliminado.',
