@@ -25,23 +25,75 @@
 	</div>
 
 	<!-- Modal Agregar-->
-	<div class="modal fade" id="agregarnuevosdatosmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
+	<div class="modal fade bd-example-modal-lg" id="agregarnuevosdatosmodal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Agrega nuevos juegos</h5>
+					<h5 class="modal-title" id="exampleModalLabel">Agrega nuevo curso</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 				<div class="modal-body">
 					<form id="frmnuevo">
-						<label>Nombre</label>
-						<input type="text" class="form-control input-sm" id="nombre" name="nombre">
-						<label>Año</label>
-						<input type="text" class="form-control input-sm" id="anio" name="anio">
-						<label>Empresa</label>
-						<input type="text" class="form-control input-sm" id="empresa" name="empresa">
+					<div class="form-row">
+							<div class="form-group col-md-9">
+								<label for="inputNombre4">Nombre</label>
+								<input type="text" class="form-control input-sm" id="curso" name="curso">
+							</div>
+							<div class="form-group col-md-3">
+								<label for="inputJornada4">Jornada</label>
+								<input type="text" class="form-control input-sm" id="jornada" name="jornada">
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-group col-md-4">
+								<label for="inputGrupo4">Grupo</label>
+								<input type="text" class="form-control input-sm" id="nombre_grupo" name="nombre_grupo">
+							</div>
+							<div class="form-group col-md-8">
+								<label for="inputJornada4">Centro de formación</label>
+								<input type="text" class="form-control input-sm" id="centro" name="centro">
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-group col-md-3">
+								<label for="inputHorario4">Horario</label>
+								<input type="text" class="form-control input-sm" id="horario" name="horario">
+							</div>
+							<div class="form-group col-md-3">
+								<label for="inputIntensidad4">Intensidad</label>
+								<input type="text" class="form-control input-sm" id="intensidad" name="intensidad">
+							</div>
+							<div class="form-group col-md-3">
+								<label for="inputFecha4">Fecha Inicio</label>
+								<input type="date" class="form-control input-sm" name="fecha_inicio"  id="fecha_inicio">
+							</div>
+							<div class="form-group col-md-3">
+								<label for="inputMunicipio4">Municipio</label>
+								<input type="text" class="form-control input-sm" name="municipio"  id="municipio">
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-group col-md-4">
+								<label for="inputDireccion4">Dirección</label>
+								<input type="text" class="form-control input-sm" id="direccion" name="direccion">
+							</div>
+							<div class="form-group col-md-4">
+								<label for="inputTipo4">Tipo formación</label>
+								<input type="text" class="form-control input-sm" id="formacion" name="formacion">
+							</div>
+							<div class="form-group col-md-4">
+								<label for="inputEstado4">Estado</label>
+								<input type="text" class="form-control input-sm" name="estado"  id="estado">
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-group col-md-12">
+								<label for="inputDescripcion4">Descripción</label>
+								<textarea name="descripcion" id="descripcion" class="form-control input-sm" cols="30" rows="10"></textarea>
+							</div>
+						</div>
 					</form>
 				</div>
 				<div class="modal-footer">
