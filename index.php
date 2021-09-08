@@ -1,3 +1,7 @@
+<?php
+	$group = $_GET['name_group'];
+	$group = (strlen($group) > 0 ) ? $group : '';
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,13 +9,14 @@
 	<?php require_once "scripts.php";  ?>
 </head>
 <body>
-	<input type="hidden" value="<?php echo $_GET['name_group'] ?>" name= "valor" id="valor">
+	
+	<input type="hidden" value="<?php echo $group?>" name= "valor" id="valor">
 	<div class="container">
 		<div class="row mt-4">
 			<div class="col-sm-12">
 				<div class="card">
 					<div class="card-header text-center">
-					Cursos disponibles en el área de artesanías
+						CURSO DISPONIBLES EN EL ÁREA <?php $group_ = (strlen($group) > 0 ) ? "DE ". $group : '' ; echo strtoupper($group_) ?>
 					</div>
 					<div class="card-body">
 						<span class="btn" style="background-color: #FF6C00; color: #fff;" data-toggle="modal" data-target="#agregarnuevosdatosmodal">
@@ -40,57 +45,70 @@
 						<div class="form-row">
 							<div class="form-group col-md-3">
 								<label for="inputCodigo4">Codigo</label>
-								<input type="number" class="form-control input-sm" id="idCurso" name="idCurso">
+								<input type="number" class="form-control input-sm" id="idCurso" name="idCurso" required="">
 							</div>
 							<div class="form-group col-md-9">
 								<label for="inputNombre4">Nombre</label>
-								<input type="text" class="form-control input-sm" id="curso" name="curso">
+								<input type="text" class="form-control input-sm" id="curso" name="curso" required="">
 							</div>
 						</div>
 						<div class="form-row">
 							<div class="form-group col-md-4">
 								<label for="inputGrupo4">Grupo</label>
-								<input type="text" class="form-control input-sm" id="nombre_grupo" name="nombre_grupo">
+								<input type="text" class="form-control input-sm" id="nombre_grupo" name="nombre_grupo" required="">
 							</div>
 							<div class="form-group col-md-8">
 								<label for="inputJornada4">Centro de formación</label>
-								<input type="text" class="form-control input-sm" id="centro" name="centro">
+								<input type="text" class="form-control input-sm" id="centro" name="centro" required="">
 							</div>
 						</div>
 						<div class="form-row">
 							<div class="form-group col-md-3">
 								<label for="inputHorario4">Horario</label>
-								<input type="text" class="form-control input-sm" id="horario" name="horario">
+								<input type="text" class="form-control input-sm" id="horario" name="horario" required="">
 							</div>
 							<div class="form-group col-md-3">
-								<label for="inputIntensidad4">Intensidad</label>
-								<input type="text" class="form-control input-sm" id="intensidad" name="intensidad">
+								<label for="inputIntensidad4">Intensidad / Horas</label>
+								<input type="number" class="form-control input-sm" id="intensidad" name="intensidad" required="">
 							</div>
 							<div class="form-group col-md-3">
 								<label for="inputFecha4">Fecha Inicio</label>
-								<input type="date" class="form-control input-sm" name="fecha_inicio"  id="fecha_inicio">
+								<input type="date" class="form-control input-sm" name="fecha_inicio"  id="fecha_inicio" required="">
 							</div>
 							<div class="form-group col-md-3">
 								<label for="inputMunicipio4">Municipio</label>
-								<input type="text" class="form-control input-sm" name="municipio"  id="municipio">
+								<input type="text" class="form-control input-sm" name="municipio"  id="municipio" required="">
 							</div>
 						</div>
 						<div class="form-row">
 							<div class="form-group col-md-3">
 								<label for="inputDireccion4">Dirección</label>
-								<input type="text" class="form-control input-sm" id="direccion" name="direccion">
+								<input type="text" class="form-control input-sm" id="direccion" name="direccion" required="">
 							</div>
 							<div class="form-group col-md-3">
 								<label for="inputTipo4">Tipo formación</label>
-								<input type="text" class="form-control input-sm" id="formacion" name="formacion">
+								<select name="formacion" id="formacion" class="form-control input-sm">
+									<option value="" disabled="" selected="">Seleccione...</option>
+									<option value="Virtual">Virtual</option>
+									<option value="Presencial">Presencial</option>
+								</select>
 							</div>
 							<div class="form-group col-md-3">
 								<label for="inputEstado4">Estado</label>
-								<input type="text" class="form-control input-sm" name="estado"  id="estado">
+								<select name="estado" id="estado" class="form-control input-sm">
+									<option value="" disabled="" selected="">Seleccione...</option>
+									<option value="Activo">Activo</option>
+									<option value="Inactivo">Inactivo</option>
+								</select>
 							</div>
 							<div class="form-group col-md-3">
 								<label for="inputJornada4">Jornada</label>
-								<input type="text" class="form-control input-sm" id="jornada" name="jornada">
+								<select name="jornada" id="jornada" class="form-control input-sm">
+									<option value="" disabled="" selected="">Seleccione...</option>
+									<option value="Diurna">Diurna</option>
+									<option value="Nocturna">Nocturna</option>
+									<option value="Mixta">Mixta</option>
+								</select>
 							</div>
 						</div>
 						<div class="form-row">
@@ -124,54 +142,54 @@
 						<div class="form-row">
 							<div class="form-group col-md-9">
 								<label for="inputNombre4">Nombre</label>
-								<input type="text" class="form-control input-sm" id="cursoU" name="cursoU">
+								<input type="text" class="form-control input-sm" id="cursoU" name="cursoU" required="">
 								<input type="text" hidden="" id="idCursoU" name="idCursoU">
 							</div>
 							<div class="form-group col-md-3">
 								<label for="inputJornada4">Jornada</label>
-								<input type="text" class="form-control input-sm" id="jornadaU" name="jornadaU">
+								<input type="text" class="form-control input-sm" id="jornadaU" name="jornadaU" required="">
 							</div>
 						</div>
 						<div class="form-row">
 							<div class="form-group col-md-4">
 								<label for="inputGrupo4">Grupo</label>
-								<input type="text" class="form-control input-sm" id="nombre_grupoU" name="nombre_grupoU">
+								<input type="text" class="form-control input-sm" id="nombre_grupoU" name="nombre_grupoU" required="">
 							</div>
 							<div class="form-group col-md-8">
 								<label for="inputJornada4">Centro de formación</label>
-								<input type="text" class="form-control input-sm" id="centroU" name="centroU">
+								<input type="text" class="form-control input-sm" id="centroU" name="centroU" required="">
 							</div>
 						</div>
 						<div class="form-row">
 							<div class="form-group col-md-3">
 								<label for="inputHorario4">Horario</label>
-								<input type="text" class="form-control input-sm" id="horarioU" name="horarioU">
+								<input type="text" class="form-control input-sm" id="horarioU" name="horarioU" required="">
 							</div>
 							<div class="form-group col-md-3">
 								<label for="inputIntensidad4">Intensidad</label>
-								<input type="text" class="form-control input-sm" id="intensidadU" name="intensidadU">
+								<input type="text" class="form-control input-sm" id="intensidadU" name="intensidadU" required="">
 							</div>
 							<div class="form-group col-md-3">
 								<label for="inputFecha4">Fecha Inicio</label>
-								<input type="date" class="form-control input-sm" name="fecha_inicioU"  id="fecha_inicioU">
+								<input type="date" class="form-control input-sm" name="fecha_inicioU"  id="fecha_inicioU" required="">
 							</div>
 							<div class="form-group col-md-3">
 								<label for="inputMunicipio4">Municipio</label>
-								<input type="text" class="form-control input-sm" name="municipioU"  id="municipioU">
+								<input type="text" class="form-control input-sm" name="municipioU"  id="municipioU" required="">
 							</div>
 						</div>
 						<div class="form-row">
 							<div class="form-group col-md-4">
 								<label for="inputDireccion4">Dirección</label>
-								<input type="text" class="form-control input-sm" id="direccionU" name="direccionU">
+								<input type="text" class="form-control input-sm" id="direccionU" name="direccionU" required="">
 							</div>
 							<div class="form-group col-md-4">
 								<label for="inputTipo4">Tipo formación</label>
-								<input type="text" class="form-control input-sm" id="formacionU" name="formacionU">
+								<input type="text" class="form-control input-sm" id="formacionU" name="formacionU" required="">
 							</div>
 							<div class="form-group col-md-4">
 								<label for="inputEstado4">Estado</label>
-								<input type="text" class="form-control input-sm" name="estadoU"  id="estadoU">
+								<input type="text" class="form-control input-sm" name="estadoU"  id="estadoU" required="">
 							</div>
 						</div>
 						<div class="form-row">

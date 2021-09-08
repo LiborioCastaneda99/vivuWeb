@@ -13,7 +13,7 @@ $result=mysqli_query($conexion,$sql);
 	<div class="table-responsive">
 
 		<table class="table table-hover small" id="cargarListadoCursos">
-			<thead style="background-color: #FF6C00;color: white; font-weight: bold;">
+			<thead class="text-center" style="background-color: #FF6C00; color: white; font-weight: bold;">
 				<tr>
 					<td>Curso</td>
 					<td>Jornada</td>
