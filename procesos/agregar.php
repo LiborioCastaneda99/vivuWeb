@@ -4,9 +4,19 @@
 	$obj= new crud();
 
 	$datos=array(
-		$_POST['nombre'],
-		$_POST['anio'],
-		$_POST['empresa']
+		$_POST['idCurso'],
+		$_POST['curso'],
+		$_POST['jornada'],
+		$_POST['nombre_grupo'],
+		$_POST['centro'],
+		$_POST['horario'],
+		$_POST['intensidad'],
+		$_POST['fecha_inicio'],
+		$_POST['municipio'],
+		$_POST['direccion'],
+		$_POST['formacion'],
+		$_POST['estado'],
+		$_POST['descripcion']
 				);
 
 	echo $obj->agregar($datos);

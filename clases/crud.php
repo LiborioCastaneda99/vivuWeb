@@ -4,7 +4,13 @@
 		public function agregar($datos){
 			$obj= new conectar();
 			$conexion=$obj->conexion();
-			$sql="INSERT INTO t_juegos (nombre,anio,empresa) VALUES ('$datos[0]', '$datos[1]', '$datos[2]')";
+			$tildes = $conexion->query("SET NAMES 'utf8'");
+			
+			$sql="INSERT INTO cursos (codigo_curso, curso, jornada, horario, intensidad, fecha_inicio, municipio,
+			direccion, formacion, centro, descripcion, nombre_grupo, estado) 
+			VALUES ('$datos[0]','$datos[1]','$datos[2]','$datos[5]','$datos[6]','$datos[7]','$datos[8]',
+			'$datos[9]','$datos[10]','$datos[4]','$datos[12]','$datos[3]','$datos[11]')";
+	
 			return mysqli_query($conexion,$sql);
 		}
 
@@ -39,8 +45,8 @@
 			$obj= new conectar();
 			$conexion=$obj->conexion();
 			$tildes = $conexion->query("SET NAMES 'utf8'");
-			$sql="UPDATE cursos SET curso ='$datos[1]',jornada='$datos[2]', horario='$datos[4]',intensidad='$datos[5]',
-			fecha_inicio='$datos[6]',municipio='$datos[8]',direccion='$datos[9]',formacion='$datos[10]',centro='$datos[3]',
+			$sql="UPDATE cursos SET curso ='$datos[1]',jornada='$datos[2]', horario='$datos[5]',intensidad='$datos[6]',
+			fecha_inicio='$datos[7]',municipio='$datos[8]',direccion='$datos[9]',formacion='$datos[10]',centro='$datos[4]',
 			descripcion='$datos[12]',nombre_grupo='$datos[3]',estado='$datos[11]' WHERE id='$datos[0]'";
 			return mysqli_query($conexion,$sql);
 		}

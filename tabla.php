@@ -45,7 +45,7 @@ $result=mysqli_query($conexion,$sql);
 								<span class="fa fa-pencil-square-o"></span>
 							</span>
 
-							<span class="btn btn-success btn-sm" onclick="">
+							<span class="btn btn-success btn-sm" data-toggle="modal" data-target="#modalVer" onclick="">
 								<span class="fa fa-eye"></span>
 							</span>
 						
@@ -72,7 +72,7 @@ $result=mysqli_query($conexion,$sql);
         "decimal": "",
         "emptyTable": "No hay información",
         "info": "Mostrando _START_ a _END_ de _TOTAL_ Registros",
-        "infoEmpty": "Mostrando 0 to 0 of 0 Registros",
+        "infoEmpty": "Mostrando 0 de 0 de 0 Registros",
         "infoFiltered": "(Filtrado de _MAX_ total Registros)",
         "infoPostFix": "",
         "thousands": ",",

@@ -36,14 +36,14 @@
 				</div>
 				<div class="modal-body">
 					<form id="frmnuevo">
-					<div class="form-row">
+						<div class="form-row">
+							<div class="form-group col-md-3">
+								<label for="inputCodigo4">Codigo</label>
+								<input type="number" class="form-control input-sm" id="idCurso" name="idCurso">
+							</div>
 							<div class="form-group col-md-9">
 								<label for="inputNombre4">Nombre</label>
 								<input type="text" class="form-control input-sm" id="curso" name="curso">
-							</div>
-							<div class="form-group col-md-3">
-								<label for="inputJornada4">Jornada</label>
-								<input type="text" class="form-control input-sm" id="jornada" name="jornada">
 							</div>
 						</div>
 						<div class="form-row">
@@ -75,23 +75,27 @@
 							</div>
 						</div>
 						<div class="form-row">
-							<div class="form-group col-md-4">
+							<div class="form-group col-md-3">
 								<label for="inputDireccion4">Dirección</label>
 								<input type="text" class="form-control input-sm" id="direccion" name="direccion">
 							</div>
-							<div class="form-group col-md-4">
+							<div class="form-group col-md-3">
 								<label for="inputTipo4">Tipo formación</label>
 								<input type="text" class="form-control input-sm" id="formacion" name="formacion">
 							</div>
-							<div class="form-group col-md-4">
+							<div class="form-group col-md-3">
 								<label for="inputEstado4">Estado</label>
 								<input type="text" class="form-control input-sm" name="estado"  id="estado">
+							</div>
+							<div class="form-group col-md-3">
+								<label for="inputJornada4">Jornada</label>
+								<input type="text" class="form-control input-sm" id="jornada" name="jornada">
 							</div>
 						</div>
 						<div class="form-row">
 							<div class="form-group col-md-12">
 								<label for="inputDescripcion4">Descripción</label>
-								<textarea name="descripcion" id="descripcion" class="form-control input-sm" cols="30" rows="10"></textarea>
+								<textarea name="descripcion" id="descripcion" class="form-control input-sm" cols="30" rows="5"></textarea>
 							</div>
 						</div>
 					</form>
@@ -106,7 +110,7 @@
 
 	<!-- Modal Editar-->
 	<div class="modal fade bd-example-modal-lg" id="modalEditar" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-lg">
+		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLabel">Editar curso <span id="nombreU"></span></h5>
@@ -172,7 +176,7 @@
 						<div class="form-row">
 							<div class="form-group col-md-12">
 								<label for="inputDescripcion4">Descripción</label>
-								<textarea name="descripcionU" id="descripcionU" class="form-control input-sm" cols="30" rows="10"></textarea>
+								<textarea name="descripcionU" id="descripcionU" class="form-control input-sm" cols="30" rows="5"></textarea>
 							</div>
 						</div>
 					</form>
@@ -187,7 +191,6 @@
 </body>
 </html>
 
-
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('#btnAgregarnuevo').click(function(){
@@ -199,6 +202,7 @@
 				url:"procesos/agregar.php",
 				success:function(r){
 					if(r==1){
+						$('#modalEditar').modal('toggle');
 						$('#frmnuevo')[0].reset();
 						$('#tablaDatatable').load('tabla.php');
 						Swal.fire(
@@ -226,6 +230,7 @@
 				url:"procesos/actualizar.php",
 				success:function(r){
 					if(r==1){
+						$('#agregarnuevosdatosmodal').modal('toggle');
 						$('#tablaDatatable').load('tabla.php');
 						Swal.fire(
 						'Correcto!',
