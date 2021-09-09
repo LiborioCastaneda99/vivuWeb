@@ -1,333 +1,489 @@
+<?php
+session_start();
+
+require 'database.php';
+
+if (isset($_SESSION['user_id'])) {
+  $records = $conn->prepare('SELECT id, nombres, apellidos, tipodocumento, documento, tipoPoblacion, email, password, fechaRegistro,rol, fecha_sesion, telefono, fechaNacimiento, municipio, sexo, img FROM users WHERE id = :id');
+  $records->bindParam(':id', $_SESSION['user_id']);
+  $records->execute();
+  $results = $records->fetch(PDO::FETCH_ASSOC);
+
+  $user = null;
+
+  if (count($results) > 0) {
+    $user = $results;
+  }
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
-	<?php require_once "scripts.php";  ?>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link rel="icon" href="assets/logoSena.png">
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+  <title>Inicio | Oferta Complementaria</title>
+  <meta property="og:title" content="Inicio | Oferta Complementaria">
+  <meta name="csrf-param" content="authenticity_token" />
+  <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
+
+  <meta name="csrf-token" content="sD0hPoBuliGFd5InGhre2tEwqBOWq5IyYKAr5Wcj/6NdVI39jnyEqFx6JUMBQiSF2YRkJZbYZjp8VUo/qVtfog==" />
+  <link rel="stylesheet" media="all" href="assets/general.css" data-turbolinks-track="reload" />
+  <link rel="stylesheet" media="screen" href="assets/grupos.css" />
+  <script src="assets/general.js" data-turbolinks-track="reload"></script>
+  <style type="text/css">
+  .footer_new {
+    bottom: 0;
+    text-align: center;
+    font-size: 15px;
+    width: 100%;
+    height: 50px; /* Set the fixed height of the footer here */
+    line-height: 44px; /* Vertically center the text there */
+    background-color: #FF6C00;
+    color: white;
+  }
+</style>
 </head>
 <body>
-	<div class="container">
-		<div class="row mt-4">
-			<div class="col-sm-12">
-				<div class="card">
-					<div class="card-header text-center">
-					Cursos disponibles en el área de artesanías
-					</div>
-					<div class="card-body">
-						<span class="btn" style="background-color: #FF6C00; color: #fff;" data-toggle="modal" data-target="#agregarnuevosdatosmodal">
-							Agregar nuevo <span class="fa fa-plus-circle"></span>
-						</span>
-						<hr>
-						<div id="tablaDatatable"></div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+  <?php if(!empty($user) && ($user['rol']=='Aprendiz')): ?>
+  <!-- ====== Barra de navegacion ======-->
+  <?php include 'header_aprendiz.php'; ?>
 
-	<!-- Modal Agregar-->
-	<div class="modal fade bd-example-modal-lg" id="agregarnuevosdatosmodal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Agrega nuevo curso</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<form id="frmnuevo">
-					<div class="form-row">
-							<div class="form-group col-md-9">
-								<label for="inputNombre4">Nombre</label>
-								<input type="text" class="form-control input-sm" id="curso" name="curso">
-							</div>
-							<div class="form-group col-md-3">
-								<label for="inputJornada4">Jornada</label>
-								<input type="text" class="form-control input-sm" id="jornada" name="jornada">
-							</div>
-						</div>
-						<div class="form-row">
-							<div class="form-group col-md-4">
-								<label for="inputGrupo4">Grupo</label>
-								<input type="text" class="form-control input-sm" id="nombre_grupo" name="nombre_grupo">
-							</div>
-							<div class="form-group col-md-8">
-								<label for="inputJornada4">Centro de formación</label>
-								<input type="text" class="form-control input-sm" id="centro" name="centro">
-							</div>
-						</div>
-						<div class="form-row">
-							<div class="form-group col-md-3">
-								<label for="inputHorario4">Horario</label>
-								<input type="text" class="form-control input-sm" id="horario" name="horario">
-							</div>
-							<div class="form-group col-md-3">
-								<label for="inputIntensidad4">Intensidad</label>
-								<input type="text" class="form-control input-sm" id="intensidad" name="intensidad">
-							</div>
-							<div class="form-group col-md-3">
-								<label for="inputFecha4">Fecha Inicio</label>
-								<input type="date" class="form-control input-sm" name="fecha_inicio"  id="fecha_inicio">
-							</div>
-							<div class="form-group col-md-3">
-								<label for="inputMunicipio4">Municipio</label>
-								<input type="text" class="form-control input-sm" name="municipio"  id="municipio">
-							</div>
-						</div>
-						<div class="form-row">
-							<div class="form-group col-md-4">
-								<label for="inputDireccion4">Dirección</label>
-								<input type="text" class="form-control input-sm" id="direccion" name="direccion">
-							</div>
-							<div class="form-group col-md-4">
-								<label for="inputTipo4">Tipo formación</label>
-								<input type="text" class="form-control input-sm" id="formacion" name="formacion">
-							</div>
-							<div class="form-group col-md-4">
-								<label for="inputEstado4">Estado</label>
-								<input type="text" class="form-control input-sm" name="estado"  id="estado">
-							</div>
-						</div>
-						<div class="form-row">
-							<div class="form-group col-md-12">
-								<label for="inputDescripcion4">Descripción</label>
-								<textarea name="descripcion" id="descripcion" class="form-control input-sm" cols="30" rows="10"></textarea>
-							</div>
-						</div>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-					<button type="button" id="btnAgregarnuevo" class="btn btn-primary">Agregar nuevo</button>
-				</div>
-			</div>
-		</div>
-	</div>
+  <div class="mt-1 PopUpContainer">
+    <!-- ====== PopUpLogin ======-->
+    <?php include 'popupLogin_aprendiz.php'; ?>
+  </div>
 
-	<!-- Modal Editar-->
-	<div class="modal fade bd-example-modal-lg" id="modalEditar" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Editar curso <span id="nombreU"></span></h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<form id="frmnuevoU">
-						<div class="form-row">
-							<div class="form-group col-md-9">
-								<label for="inputNombre4">Nombre</label>
-								<input type="text" class="form-control input-sm" id="cursoU" name="cursoU">
-								<input type="text" hidden="" id="idCurso" name="idCurso">
-							</div>
-							<div class="form-group col-md-3">
-								<label for="inputJornada4">Jornada</label>
-								<input type="text" class="form-control input-sm" id="jornadaU" name="jornadaU">
-							</div>
-						</div>
-						<div class="form-row">
-							<div class="form-group col-md-4">
-								<label for="inputGrupo4">Grupo</label>
-								<input type="text" class="form-control input-sm" id="nombre_grupoU" name="nombre_grupoU">
-							</div>
-							<div class="form-group col-md-8">
-								<label for="inputJornada4">Centro de formación</label>
-								<input type="text" class="form-control input-sm" id="centroU" name="centroU">
-							</div>
-						</div>
-						<div class="form-row">
-							<div class="form-group col-md-3">
-								<label for="inputHorario4">Horario</label>
-								<input type="text" class="form-control input-sm" id="horarioU" name="horarioU">
-							</div>
-							<div class="form-group col-md-3">
-								<label for="inputIntensidad4">Intensidad</label>
-								<input type="text" class="form-control input-sm" id="intensidadU" name="intensidadU">
-							</div>
-							<div class="form-group col-md-3">
-								<label for="inputFecha4">Fecha Inicio</label>
-								<input type="date" class="form-control input-sm" name="fecha_inicioU"  id="fecha_inicioU">
-							</div>
-							<div class="form-group col-md-3">
-								<label for="inputMunicipio4">Municipio</label>
-								<input type="text" class="form-control input-sm" name="municipioU"  id="municipioU">
-							</div>
-						</div>
-						<div class="form-row">
-							<div class="form-group col-md-4">
-								<label for="inputDireccion4">Dirección</label>
-								<input type="text" class="form-control input-sm" id="direccionU" name="direccionU">
-							</div>
-							<div class="form-group col-md-4">
-								<label for="inputTipo4">Tipo formación</label>
-								<input type="text" class="form-control input-sm" id="formacionU" name="formacionU">
-							</div>
-							<div class="form-group col-md-4">
-								<label for="inputEstado4">Estado</label>
-								<input type="text" class="form-control input-sm" name="estadoU"  id="estadoU">
-							</div>
-						</div>
-						<div class="form-row">
-							<div class="form-group col-md-12">
-								<label for="inputDescripcion4">Descripción</label>
-								<textarea name="descripcionU" id="descripcionU" class="form-control input-sm" cols="30" rows="10"></textarea>
-							</div>
-						</div>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-					<button type="button" class="btn btn-warning" id="btnActualizar">Actualizar</button>
-				</div>
-			</div>
-		</div>
-	</div>
+  <!--<div class="contenedor-vistas">-->
+    <div class="container down">
+
+
+     <main class="contentContainer">
+
+       <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+          <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+          <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+          <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+          <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+          <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
+        </ol>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img class="d-block w-100" src="assets/slider1.jpg" alt="First slide">
+            <div class="carousel-caption d-none d-md-block">
+              <h5></h5>
+              <p></p>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img class="d-block w-100" src="assets/slider0.jpg" alt="First slide">
+            <div class="carousel-caption d-none d-md-block">
+              <h5></h5>
+              <p></p>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img class="d-block w-100" src="assets/slider2.jpg" alt="Second slide">
+            <div class="carousel-caption d-none d-md-block">
+              <h5></h5>
+              <p></p>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img class="d-block w-100" src="assets/slider3.jpg" alt="Third slide">
+            <div class="carousel-caption d-none d-md-block">
+              <h5></h5>
+              <p></p>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img class="d-block w-100" src="assets/slider4.jpg" alt="Third slide">
+            <div class="carousel-caption d-none d-md-block">
+              <h5></h5>
+              <p></p>
+            </div>
+          </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
+
+      <div class="cardHome">
+        <div class="cardHomeHeader">
+          <span>Formación complementaria</span>
+        </div>
+        <div class="cardHomeContent">
+          <div class="cardHomeContentImage">
+            <img src="assets/formacion_complementaria.jpg" alt="Logosena" />
+          </div>
+          <div class="cardHomeContentDescription">
+            <div class="description" style="font-size:17px;">
+              <p>La formación complementaria está orientada a preparar al aprendiz para desempeñar oficios y ocupaciones requeridas por los sectores productivos y sociales, con el fin de satisfacer necesidades del nuevo talento o de cualificación de trabajadores que estén o no vinculados al mundo laboral, a través de cursos cortos de formación.</p>
+            </div>
+            <div class="button">
+              <a href="cursos.php" class="Link">Inscribirse</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="cardHome">
+        <div class="cardHomeHeader">
+          <span>Emprendimiento</span>
+        </div>
+        <div class="cardHomeContent">
+          <div class="cardHomeContentImage">
+            <img src="assets/formacion_emprendimiento.jpg" alt="Emprendimiento" />
+          </div>
+          <div class="cardHomeContentDescription">
+            <div class="description" style="font-size:17px;">
+              <p>Fomentar la cultura del emprendimiento identificando oportunidades e ideas de negocio con valores diferenciales impulsando y fortaleciendo el desarrollo empresarial para la generación de ingresos y el empleo formal y decente. Acompañamos a los emprendedores en la creación y puesta en marcha de sus empresas. <br>
+              Con nuestra asesoría los emprendedores podran: identificar modelos de negocio, formulación de plan de negocio, creación de empresa, asesoría en la fase inicial, diagnóstico empresarial, desarrollo de nuevos productos, encadenamientos productivos y gestión para acceder a fuentes de financiación.</p>
+            </div>
+            <div class="button">
+              <a href="emprendimiento.php" class="Link">Inscribirse</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="cardHome">
+        <div class="cardHomeHeader">
+          <span>Certificación por competencias</span>
+        </div>
+        <div class="cardHomeContent">
+          <div class="cardHomeContentImage">
+            <img src="assets/formacion_certificacion.jpg" alt="Certificacion" />
+          </div>
+          <div class="cardHomeContentDescription">
+            <div class="description" style="font-size:17px;">
+              <p>La certificación por competencias u oficios es un programa orientado a desempeñar oficios y ocupaciones, basados en su experiencia y el desempeño actual de sus habilidades en un campo especifico, guiándolo a través del proceso de certificación, con lo cual le garantiza al sector productivo que es un aliado integral no solo competente en su saber y hacer, sino también en su ser.</p>
+            </div>
+            <div class="button">
+              <a href="competencias.php" class="Link">Inscribirse</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <?php elseif(!empty($user) && ($user['rol']=='Administrador')): ?>
+
+  <!--Menú admin-->
+  <?php include 'header_admin.php'; ?>
+  <div class="mt-1 PopUpContainer">
+    <div class="contentContainer">
+      <ol class="breadcrumb" class="active"><li><a href="index.php">Inicio</a></li></ol>
+    </div>
+    <!-- ====== PopUpLogin ======-->
+    <?php include 'popupLogin_admin.php'; ?>
+  </div>
+  <!--<div class="contenedor-vistas">-->
+    <div class="container down">
+
+
+      <main class="contentContainer">
+
+       <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+          <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+          <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+          <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+          <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+          <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
+        </ol>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img class="d-block w-100" src="assets/slider1.jpg" alt="First slide">
+            <div class="carousel-caption d-none d-md-block">
+              <h5></h5>
+              <p></p>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img class="d-block w-100" src="assets/slider0.jpg" alt="First slide">
+            <div class="carousel-caption d-none d-md-block">
+              <h5></h5>
+              <p></p>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img class="d-block w-100" src="assets/slider2.jpg" alt="Second slide">
+            <div class="carousel-caption d-none d-md-block">
+              <h5></h5>
+              <p></p>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img class="d-block w-100" src="assets/slider3.jpg" alt="Third slide">
+            <div class="carousel-caption d-none d-md-block">
+              <h5></h5>
+              <p></p>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img class="d-block w-100" src="assets/slider4.jpg" alt="Third slide">
+            <div class="carousel-caption d-none d-md-block">
+              <h5></h5>
+              <p></p>
+            </div>
+          </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
+
+      <div class="cardHome">
+        <div class="cardHomeHeader">
+          <span>Formación complementaria</span>
+        </div>
+        <div class="cardHomeContent">
+          <div class="cardHomeContentImage">
+            <img src="assets/formacion_complementaria.jpg" alt="Logosena" />
+          </div>
+          <div class="cardHomeContentDescription">
+            <div class="description" style="font-size:17px;">
+              <p>La formación complementaria está orientada a preparar al aprendiz para desempeñar oficios y ocupaciones requeridas por los sectores productivos y sociales, con el fin de satisfacer necesidades del nuevo talento o de cualificación de trabajadores que estén o no vinculados al mundo laboral, a través de cursos cortos de formación.</p>
+            </div>
+            <div class="button">
+              <a href="cursos.php" class="Link">Inscribirse</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="cardHome">
+        <div class="cardHomeHeader">
+          <span>Emprendimiento</span>
+        </div>
+        <div class="cardHomeContent">
+          <div class="cardHomeContentImage">
+            <img src="assets/formacion_emprendimiento.jpg" alt="Emprendimiento" />
+          </div>
+          <div class="cardHomeContentDescription">
+            <div class="description" style="font-size:17px;">
+              <p>Fomentar la cultura del emprendimiento identificando oportunidades e ideas de negocio con valores diferenciales impulsando y fortaleciendo el desarrollo empresarial para la generación de ingresos y el empleo formal y decente. Acompañamos a los emprendedores en la creación y puesta en marcha de sus empresas. <br>
+              Con nuestra asesoría los emprendedores podran: identificar modelos de negocio, formulación de plan de negocio, creación de empresa, asesoría en la fase inicial, diagnóstico empresarial, desarrollo de nuevos productos, encadenamientos productivos y gestión para acceder a fuentes de financiación.</p>
+            </div>
+            <div class="button">
+              <a href="emprendimiento.php" class="Link">Inscribirse</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="cardHome">
+        <div class="cardHomeHeader">
+          <span>Certificación por competencias</span>
+        </div>
+        <div class="cardHomeContent">
+          <div class="cardHomeContentImage">
+            <img src="assets/formacion_certificacion.jpg" alt="Certificacion" />
+          </div>
+          <div class="cardHomeContentDescription">
+            <div class="description" style="font-size:17px;">
+              <p>La certificación por competencias u oficios es un programa orientado a desempeñar oficios y ocupaciones, basados en su experiencia y el desempeño actual de sus habilidades en un campo especifico, guiándolo a través del proceso de certificación, con lo cual le garantiza al sector productivo que es un aliado integral no solo competente en su saber y hacer, sino también en su ser.</p>
+            </div>
+            <div class="button">
+              <a href="competencias.php" class="Link">Inscribirse</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+  <?php else: ?>
+    <?php include 'header.php'; ?>
+
+
+    <div class="mt-1 PopUpContainer">
+      <div class="contentContainer">
+        <ol class="breadcrumb"><li class="active">Inicio</li></ol>
+      </div>
+    </div>
+
+    <!--<div class="contenedor-vistas">-->
+      <div class="container down">
+
+
+        <main class="contentContainer">
+
+         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+          <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
+          </ol>
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img class="d-block w-100" src="assets/slider1.jpg" alt="First slide">
+              <div class="carousel-caption d-none d-md-block">
+                <h5></h5>
+                <p></p>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <img class="d-block w-100" src="assets/slider0.jpg" alt="First slide">
+              <div class="carousel-caption d-none d-md-block">
+                <h5></h5>
+                <p></p>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <img class="d-block w-100" src="assets/slider2.jpg" alt="Second slide">
+              <div class="carousel-caption d-none d-md-block">
+                <h5></h5>
+                <p></p>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <img class="d-block w-100" src="assets/slider3.jpg" alt="Third slide">
+              <div class="carousel-caption d-none d-md-block">
+                <h5></h5>
+                <p></p>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <img class="d-block w-100" src="assets/slider4.jpg" alt="Third slide">
+              <div class="carousel-caption d-none d-md-block">
+                <h5></h5>
+                <p></p>
+              </div>
+            </div>
+          </div>
+          <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+
+        <div class="cardHome">
+          <div class="cardHomeHeader">
+            <span>Formación complementaria</span>
+          </div>
+          <div class="cardHomeContent">
+            <div class="cardHomeContentImage">
+              <img src="assets/formacion_complementaria.jpg" alt="Logosena" />
+            </div>
+            <div class="cardHomeContentDescription">
+              <div class="description" style="font-size:17px;">
+                <p>La formación complementaria está orientada a preparar al aprendiz para desempeñar oficios y ocupaciones requeridas por los sectores productivos y sociales, con el fin de satisfacer necesidades del nuevo talento o de cualificación de trabajadores que estén o no vinculados al mundo laboral, a través de cursos cortos de formación.</p>
+              </div>
+              <div class="button">
+                <a href="cursos.php" class="Link">Inscribirse</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="cardHome">
+          <div class="cardHomeHeader">
+            <span>Emprendimiento</span>
+          </div>
+          <div class="cardHomeContent">
+            <div class="cardHomeContentImage">
+              <img src="assets/formacion_emprendimiento.jpg" alt="Emprendimiento" />
+            </div>
+            <div class="cardHomeContentDescription">
+              <div class="description" style="font-size:17px;">
+                <p>Fomentar la cultura del emprendimiento identificando oportunidades e ideas de negocio con valores diferenciales impulsando y fortaleciendo el desarrollo empresarial para la generación de ingresos y el empleo formal y decente. Acompañamos a los emprendedores en la creación y puesta en marcha de sus empresas. <br>
+                Con nuestra asesoría los emprendedores podran: identificar modelos de negocio, formulación de plan de negocio, creación de empresa, asesoría en la fase inicial, diagnóstico empresarial, desarrollo de nuevos productos, encadenamientos productivos y gestión para acceder a fuentes de financiación.</p>
+              </div>
+              <div class="button">
+                <a href="emprendimiento.php" class="Link">Inscribirse</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="cardHome">
+          <div class="cardHomeHeader">
+            <span>Certificación por competencias</span>
+          </div>
+          <div class="cardHomeContent">
+            <div class="cardHomeContentImage">
+              <img src="assets/formacion_certificacion.jpg" alt="Certificacion" />
+            </div>
+            <div class="cardHomeContentDescription">
+              <div class="description" style="font-size:17px;">
+                <p>La certificación por competencias u oficios es un programa orientado a desempeñar oficios y ocupaciones, basados en su experiencia y el desempeño actual de sus habilidades en un campo especifico, guiándolo a través del proceso de certificación, con lo cual le garantiza al sector productivo que es un aliado integral no solo competente en su saber y hacer, sino también en su ser.</p>
+              </div>
+              <div class="button">
+                <a href="competencias.php" class="Link">Inscribirse</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  <?php endif; ?>
+
+  <footer class="footer_new">
+    <div class="container">
+      <span class="">Todos los derechos <?php echo '&copy'; echo date("Y"); ?>  SENA - Políticas de privacidad y condiciones uso Portal Web SENA</span>
+    </div>
+  </footer>
+  <script>
+    var dummyContent = $('.dummy-content').children(),
+    i;
+
+
+    $('#add-content').click(function(e){
+      e.preventDefault();
+
+      if($(dummyContent[0]).is(":visible")){
+        for(i=0;i<dummyContent.length;i++){
+          $(dummyContent[i]).fadeOut(600);
+        }
+      }
+      else{
+        for(i=0;i<dummyContent.length;i++){
+          $(dummyContent[i]).delay(600*i).fadeIn(600);
+        }
+      }
+
+    });
+  </script>
+  <!-- Demo ads. Please ignore and remove. -->
+  <script src="http://cdn.tutorialzine.com/misc/enhance/v2.js" async></script>
+  <script src="assets/home.js"></script>
+  <!-- ====== Pie de pagina ======-->
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="assets/main.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js" integrity="sha384-XTs3FgkjiBgo8qjEjBk0tGmf3wPrWtA6coPfQDfFEY8AnYJwjalXCiosYRBIBZX8" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
 </body>
+
 </html>
-
-
-<script type="text/javascript">
-	$(document).ready(function(){
-		$('#btnAgregarnuevo').click(function(){
-			datos=$('#frmnuevo').serialize();
-
-			$.ajax({
-				type:"POST",
-				data:datos,
-				url:"procesos/agregar.php",
-				success:function(r){
-					if(r==1){
-						$('#frmnuevo')[0].reset();
-						$('#tablaDatatable').load('tabla.php');
-						Swal.fire(
-						'Correcto!',
-						'Se ha guardado correctamente!',
-						'success'
-						);
-					}else{
-						Swal.fire(
-						'Error!',
-						'No se ha guardado correctamente!',
-						'error'
-						);
-					}
-				}
-			});
-		});
-
-		$('#btnActualizar').click(function(){
-			datos=$('#frmnuevoU').serialize();
-
-			$.ajax({
-				type:"POST",
-				data:datos,
-				url:"procesos/actualizar.php",
-				success:function(r){
-					if(r==1){
-						$('#tablaDatatable').load('tabla.php');
-						Swal.fire(
-						'Correcto!',
-						'Se ha actualizado correctamente!',
-						'success'
-						);					
-					}else{
-						Swal.fire(
-						'Error!',
-						'No se ha actualizado correctamente!',
-						'error'
-						);					
-					}
-				}
-			});
-		});
-	});
-</script>
-
-<script type="text/javascript">
-	$(document).ready(function(){
-		$('#tablaDatatable').load('tabla.php');
-	});
-</script>
-
-<script type="text/javascript">
-	function agregaFrmActualizar(idCurso){
-		$.ajax({
-			type:"POST",
-			data:"id=" + idCurso,
-			url:"procesos/obtenDatos.php",
-			success:function(r){
-				datos=jQuery.parseJSON(r);
-				$('#idCurso').val(datos['id']);
-				$('#cursoU').val(datos['curso']);
-				$('#jornadaU').val(datos['jornada']);
-				$('#nombre_grupoU').val(datos['nombre_grupo']);
-				$('#centroU').val(datos['centro']);
-				$('#horarioU').val(datos['horario']);
-				$('#intensidadU').val(datos['intensidad']);
-				$('#fecha_inicioU').val(datos['fecha_inicio']);
-				$('#municipioU').val(datos['municipio']);
-				$('#direccionU').val(datos['direccion']);
-				$('#formacionU').val(datos['formacion']);
-				$('#estadoU').val(datos['estado']);
-				$('#descripcionU').val(datos['descripcion']);
-			}
-		});
-	}
-
-	function eliminarDatos(idCurso){
-		const swalWithBootstrapButtons = Swal.mixin({
-		customClass: {
-			confirmButton: 'btn btn-success',
-			cancelButton: 'btn btn-danger'
-		},
-		buttonsStyling: false
-		})
-
-		swalWithBootstrapButtons.fire({
-		title: '¿Está seguro?',
-		text: "¡No podrás revertir esto!",
-		icon: 'warning',
-		showCancelButton: true,
-		confirmButtonText: '¡Si, bórralo!',
-		cancelButtonText: '¡No, cancela!',
-		reverseButtons: true
-		}).then((result) => {
-		if (result.isConfirmed) {
-			$.ajax({
-				type:"POST",
-				data:"id=" + idCurso,
-				url:"procesos/eliminar.php",
-				success:function(r){
-					if(r==1){
-						$('#tablaDatatable').load('tabla.php');
-						swalWithBootstrapButtons.fire(
-						'¡Eliminado!',
-						'El curso ha sido eliminado.',
-						'success'
-						)
-					}else{
-						swalWithBootstrapButtons.fire(
-						'¡Eliminado!',
-						'El curso no ha sido eliminado.',
-						'error'
-						)
-					}
-				}
-			});
-			
-		} else if (
-			result.dismiss === Swal.DismissReason.cancel
-		) {
-			swalWithBootstrapButtons.fire(
-			'Cancelado',
-			'El curso está seguro, ha cancelado la eliminación.',
-			'error'
-			)
-		}
-		});
-	}
-
-	
-</script>
