@@ -29,38 +29,38 @@
           </li> 
           <li class="menu">
             <a href="https://agenciapublicadeempleo.sena.edu.co/Paginas/inicio.aspx" target="_blank">
-              <i class="fa fa-list-ul fa-fw hidden-md hidden-lg" aria-hidden="true"></i> APE
+              <i class="fa fa-list-ul fa-fw hidden-md hidden-lg" aria-hidden="true"></i>APE
             </a>
           </li> 
           <li class="menu">
             <a href="cursos.php">
-              <i class="fa fa-list-ul fa-fw hidden-md hidden-lg" aria-hidden="true"></i> CURSOS
+              <i class="fa fa-list-ul fa-fw hidden-md hidden-lg" aria-hidden="true"></i>CURSOS
             </a>
           </li> 
           <li class="menu">
             <a href="mis-cursos.php">
-              <i class="fa fa-list-ul fa-fw hidden-md hidden-lg" aria-hidden="true"></i> CURSOS OFERTADOS
+              <i class="fa fa-list-ul fa-fw hidden-md hidden-lg" aria-hidden="true"></i>CURSOS OFERTADOS
             </a>
           </li>
           <?php if ($user['centro']=='OFICINA'): ?>
-            <?php else: ?>
-              <li class="menu">
-                <a href="graphic.php">
-                  <i class="fa fa-list-ul fa-fw hidden-md hidden-lg" aria-hidden="true"></i> DASHBOARD
-                </a>
-              </li>
-            <?php endif ?>
-
-            <li class="">
-              <a href="user-edit.php">
-                <i class="fa fa-user fa-fw hidden-md hidden-lg" aria-hidden="true"></i><?php echo strtoupper($user['nombres']." ".$user['apellidos']); ?>
+          <?php else: ?>
+            <!--<li class="menu">
+              <a href="graphic.php">
+                <i class="fa fa-list-ul fa-fw hidden-md hidden-lg" aria-hidden="true"></i>DASHBOARD
               </a>
-            </li>
+            </li>-->
+          <?php endif ?>
 
-            <li class="hidden-xs hidden-sm">
-              <!--Verifica si el usuario actual tiene <foto--><img  class="NavBar-Nav-icon btn-PopUpLogin" src="assets/<?php echo $user['img'];?>" alt=""><!--</foto>-->
-             
-            </li>
+          <li>
+            <a href="user-edit.php">
+              <i class="fa fa-user fa-fw hidden-md hidden-lg" aria-hidden="true"></i><?php echo strtoupper($user[1]." ".$user[2]); ?>
+            </a>
+          </li>
+          <li class="hidden-xs hidden-sm">
+              <!--Verifica si el usuario actual tiene <foto-->
+                <img  class="NavBar-Nav-icon btn-PopUpLogin" src="assets/<?php echo $user[15];?>" alt="">
+                <!--</foto>-->
+          </li>
           </ul>
         </nav>
         <i class="fa fa-bars hidden-md hidden-lg btn-mobile-menu show-menu-mobile" aria-hidden="true"></i>
