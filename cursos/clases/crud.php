@@ -14,6 +14,16 @@
 			return mysqli_query($conexion,$sql);
 		}
 
+		public function agregarInscripcion($datos){
+			$obj= new conectar();
+			$conexion=$obj->conexion();
+			$tildes = $conexion->query("SET NAMES 'utf8'");
+			
+			$sql="INSERT INTO y_inscritos_cursos (id_curso, id_usuario) VALUES ('$datos[0]','$datos[1]')";
+	
+			return mysqli_query($conexion,$sql);
+		}
+
 		public function obtenDatos($id){
 			$obj =  new conectar();
 			$conexion = $obj->conexion();

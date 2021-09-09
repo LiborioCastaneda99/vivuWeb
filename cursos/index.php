@@ -287,27 +287,49 @@ $group = (strlen($group) > 0 ) ? $group : '';
 			</div>
 		</div>
 	</div>
+
+<?php elseif(!empty($user) && ($user[9]=='Aprendiz')): ?>
+  
+	<!-- contenido para Aprendiz -->
+	<?php require_once '../header_aprendiz.php'; ?>
+
+	<div class="mt-1 PopUpContainer">
+		<div class="contentContainer">
+		<ol class="breadcrumb"><li><a href="index.php">Inicio</a></li><li class="active">Cursos</li></ol>
+		</div>
+		<?php require_once '../popupLogin_aprendiz.php'; ?>
+	</div>
+
+	<input type="hidden" value="<?php echo $group?>" name= "valor" id="valor">
+	<div class="container">
+		<div class="row mt-4">
+			<div class="col-sm-12">
+				<div class="card">
+					<div class="card-header text-center">
+						CURSO DISPONIBLES EN EL ÁREA <?php $group_ = (strlen($group) > 0 ) ? "DE ". $group : '' ; echo strtoupper($group_) ?>
+					</div>
+					<div class="card-body">
+						<div id="tablaDatatable"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
 <?php endif; ?>
 
-<footer class="footer_new">
-  <div class="container">
+<footer class="footer_new mx-auto">
+  <div class="">
     <span class="">Todos los derechos <?php echo '&copy'; echo date("Y"); ?>  SENA - Políticas de privacidad y condiciones uso Portal Web SENA</span>
   </div>
 </footer>
 
 
 <!-- Demo ads. Please ignore and remove. -->
-<script src="http://cdn.tutorialzine.com/misc/enhance/v2.js" async></script>
-<script src="http://www.vivu.com.co/assets/nombre_grupos-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.js"></script>
 <!-- ====== Pie de pagina ======-->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script src="http://www.vivu.com.co/assets/main.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js" integrity="sha384-XTs3FgkjiBgo8qjEjBk0tGmf3wPrWtA6coPfQDfFEY8AnYJwjalXCiosYRBIBZX8" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
-</body>
 
+
+</body>
 </html>
 
 <script type="text/javascript">
