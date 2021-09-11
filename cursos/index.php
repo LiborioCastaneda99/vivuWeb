@@ -78,7 +78,7 @@ $group = (strlen($group) > 0 ) ? $group : '';
 </head>
 <body>
 
-<?php if(!empty($user) && ($user[9]=='Administrador')): ?>
+<?php if(!empty($user) && ($user[9]=='1')): ?>
   
   <!-- contenido para Administrador -->
   <?php require_once '../header_admin.php'; ?>
@@ -92,15 +92,15 @@ $group = (strlen($group) > 0 ) ? $group : '';
 
 	<input type="hidden" value="<?php echo $group?>" name= "valor" id="valor">
 	<div class="container">
-		<div class="row mt-4">
+		<div class="row mt-1">
 			<div class="col-sm-12">
 				<div class="card">
 					<div class="card-header text-center">
-						CURSO DISPONIBLES EN EL ÁREA <?php $group_ = (strlen($group) > 0 ) ? "DE ". $group : '' ; echo strtoupper($group_) ?>
+						Curso Disponibles En El Área <?php $group_ = (strlen($group) > 0 ) ? "De <b>". $group."</b>" : '' ; echo ($group_) ?>
 					</div>
 					<div class="card-body">
-						<span class="btn" style="background-color: #FF6C00; color: #fff;" data-toggle="modal" data-target="#agregarnuevosdatosmodal">
-							Agregar nuevo <span class="fa fa-plus-circle"></span>
+						<span class="btn btn-outline-primary btn-block" data-toggle="modal" data-target="#agregarnuevosdatosmodal">
+							<span class="fa fa-plus-square-o"></span> Agregar nuevo curso 
 						</span>
 						<hr>
 						<div id="tablaDatatable"></div>
@@ -200,8 +200,8 @@ $group = (strlen($group) > 0 ) ? $group : '';
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-					<button type="button" id="btnAgregarnuevo" class="btn btn-primary">Agregar nuevo</button>
+					<button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cerrar</button>
+					<button type="button" id="btnAgregarnuevo" class="btn btn-outline-secondary">Agregar nuevo</button>
 				</div>
 			</div>
 		</div>
@@ -281,14 +281,14 @@ $group = (strlen($group) > 0 ) ? $group : '';
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-					<button type="button" class="btn btn-warning" id="btnActualizar">Actualizar</button>
+					<button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cerrar</button>
+					<button type="button" class="btn btn-outline-secondary" id="btnActualizar">Actualizar</button>
 				</div>
 			</div>
 		</div>
 	</div>
 
-<?php elseif(!empty($user) && ($user[9]=='Aprendiz')): ?>
+<?php elseif(!empty($user) && ($user[9]=='2')): ?>
   
 	<!-- contenido para Aprendiz -->
 	<?php require_once '../header_aprendiz.php'; ?>
@@ -302,11 +302,67 @@ $group = (strlen($group) > 0 ) ? $group : '';
 
 	<input type="hidden" value="<?php echo $group?>" name= "valor" id="valor">
 	<div class="container">
-		<div class="row mt-4">
+		<div class="row mt-1">
 			<div class="col-sm-12">
 				<div class="card">
 					<div class="card-header text-center">
-						CURSO DISPONIBLES EN EL ÁREA <?php $group_ = (strlen($group) > 0 ) ? "DE ". $group : '' ; echo strtoupper($group_) ?>
+						Curso Disponibles En El Área <?php $group_ = (strlen($group) > 0 ) ? "De <b>". $group."</b>" : '' ; echo ($group_) ?>
+					</div>
+					<div class="card-body">
+						<div id="tablaDatatable"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<?php elseif(!empty($user) && ($user[9]=='3')): ?>
+  
+	<!-- contenido para Orientador -->
+	<?php require_once '../header_orientador.php'; ?>
+
+	<div class="mt-1 PopUpContainer">
+		<div class="contentContainer">
+		<ol class="breadcrumb"><li><a href="index.php">Inicio</a></li><li class="active">Cursos</li></ol>
+		</div>
+		<?php require_once '../popupLogin_orientador.php'; ?>
+	</div>
+
+	<input type="hidden" value="<?php echo $group?>" name= "valor" id="valor">
+	<div class="container">
+		<div class="row mt-1">
+			<div class="col-sm-12">
+				<div class="card">
+					<div class="card-header text-center">
+						Curso Disponibles En El Área <?php $group_ = (strlen($group) > 0 ) ? "De <b>". $group."</b>" : '' ; echo ($group_) ?>
+					</div>
+					<div class="card-body">
+						<div id="tablaDatatable"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<?php else: ?>
+  
+	<!-- contenido para Orientador -->
+	<?php require_once '../header_orientador.php'; ?>
+
+	<div class="mt-1 PopUpContainer">
+		<div class="contentContainer">
+		<ol class="breadcrumb"><li><a href="index.php">Inicio</a></li><li class="active">Cursos</li></ol>
+		</div>
+		<?php require_once '../popupLogin_orientador.php'; ?>
+	</div>
+
+	<input type="hidden" value="<?php echo $group?>" name= "valor" id="valor">
+	<div class="container">
+		<div class="row mt-1">
+			<div class="col-sm-12">
+				<div class="card">
+					<div class="card-header text-center">
+						Curso Disponibles En El Área <?php $group_ = (strlen($group) > 0 ) ? "De <b>". $group."</b>" : '' ; echo ($group_) ?>
 					</div>
 					<div class="card-body">
 						<div id="tablaDatatable"></div>
@@ -318,16 +374,11 @@ $group = (strlen($group) > 0 ) ? $group : '';
 
 <?php endif; ?>
 
-<footer class="footer_new mx-auto">
+<footer class="footer_new text-center mt-3">
   <div class="">
     <span class="">Todos los derechos <?php echo '&copy'; echo date("Y"); ?>  SENA - Políticas de privacidad y condiciones uso Portal Web SENA</span>
   </div>
 </footer>
-
-
-<!-- Demo ads. Please ignore and remove. -->
-<!-- ====== Pie de pagina ======-->
-
 
 </body>
 </html>
@@ -428,8 +479,8 @@ $group = (strlen($group) > 0 ) ? $group : '';
 	function eliminarDatos(idCurso){
 		const swalWithBootstrapButtons = Swal.mixin({
 		customClass: {
-			confirmButton: 'btn btn-success',
-			cancelButton: 'btn btn-danger'
+			confirmButton: 'btn btn-outline-success',
+			cancelButton: 'btn btn-outline-danger'
 		},
 		buttonsStyling: false
 		})

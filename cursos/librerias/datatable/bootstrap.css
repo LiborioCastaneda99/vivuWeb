@@ -1995,8 +1995,8 @@ fieldset[disabled] a.btn {
 
 .btn-primary:hover {
   color: #fff;
-  background-color: #0069d9;
-  border-color: #0062cc;
+  background-color: #cc5500;
+  border-color: #e66000;
 }
 
 .btn-primary:focus, .btn-primary.focus {
@@ -2010,9 +2010,9 @@ fieldset[disabled] a.btn {
 
 .btn-primary:active, .btn-primary.active,
 .show > .btn-primary.dropdown-toggle {
-  background-color: #0069d9;
+  background-color: #cc5500;
   background-image: none;
-  border-color: #0062cc;
+  border-color: #e66000;
 }
 
 .btn-secondary {
@@ -3997,7 +3997,7 @@ tbody.collapse.show {
 .badge-primary[href]:focus, .badge-primary[href]:hover {
   color: #fff;
   text-decoration: none;
-  background-color: #0062cc;
+  background-color: #e66000;
 }
 
 .badge-secondary {
@@ -5235,7 +5235,7 @@ button.close {
 }
 
 a.bg-primary:focus, a.bg-primary:hover {
-  background-color: #0062cc !important;
+  background-color: #e66000 !important;
 }
 
 .bg-secondary {
@@ -8104,7 +8104,7 @@ a.bg-dark:focus, a.bg-dark:hover {
 }
 
 a.text-primary:focus, a.text-primary:hover {
-  color: #0062cc !important;
+  color: #e66000 !important;
 }
 
 .text-secondary {

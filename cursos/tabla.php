@@ -29,7 +29,7 @@ $result=mysqli_query($conexion,$sql);
 	<div class="table-responsive">
 
 		<table class="table table-hover small" id="cargarListadoCursos">
-			<thead class="text-center" style="background-color: #FF6C00; color: white; font-weight: bold;">
+			<thead class="text-center bg-primary">
 				<tr>
 					<td>Curso</td>
 					<td>Jornada</td>
@@ -39,7 +39,11 @@ $result=mysqli_query($conexion,$sql);
 					<td>Municipio</td>
 					<td>Lugar</td>
 					<td>Descripción</td>
-					<td width="16%">Acciones</td>
+					<?php if(!empty($user) && ($user[9]=='1') || ($user[9]=='2')): ?>
+						<td width="16%">Acciones</td>
+					<?php else: ?>
+						<td width="16%">Acciones</td>
+					<?php endif; ?>
 				</tr>
 			</thead>
 			
@@ -56,38 +60,46 @@ $result=mysqli_query($conexion,$sql);
 							<td><?php echo strtoupper($mostrar[7]); ?></td>
 							<td><?php echo strtoupper($mostrar[8]); ?></td>
 							<td><?php echo strtoupper($mostrar[11]); ?></td>
-							<?php if(!empty($user) && ($user[9]=='Aprendiz')): ?>
+							<?php if(!empty($user) && ($user[9]=='1')): ?>
+								<td style="text-align: center;" >
+									<span class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#modalEditar" onclick="agregaFrmActualizar('<?php echo $mostrar[0] ?>')">
+										<span class="fa fa-pencil-square-o"></span>
+									</span>
+
+									<span class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#modalVer" onclick="">
+										<span class="fa fa-eye"></span>
+									</span>
+								
+									<span class="btn btn-outline-danger btn-sm" onclick="eliminarDatos('<?php echo $mostrar[0] ?>')">
+										<span class="fa fa-trash"></span>
+									</span>
+								</td>
+							<?php elseif(!empty($user) && ($user[9]=='2')): ?>
 								<?php 
 									$eCurso = mysqli_fetch_row(mysqli_query($conexion, "SELECT estado FROM y_inscritos_cursos where id_usuario='$user[0]' and id_curso='$mostrar[0]'"))[0];
                           		?>
 								<td style="text-align: center;" >
 									<!-- Estado inscrito -->
 									<?php if(($eCurso == 1)): ?>
-										<span class="btn btn-warning btn-sm">
+										<span class="btn btn-outline-secondary btn-sm">
 											<span class="fa fa-check-square-o"></span> Inscrito
 										</span>
 									<?php else:?>
-										<span class="btn btn-warning btn-sm" onclick="btnInscribir(<?php echo $mostrar[0];?>, <?php echo $user[0];?>)">
+										<span class="btn btn-outline-secondary btn-sm" onclick="btnInscribir(<?php echo $mostrar[0];?>, <?php echo $user[0];?>)">
 											<span class="fa fa-plus-square-o"></span> Inscribir
 										</span>
 									<?php endif; ?>
 
-									<span class="btn btn-success btn-sm" data-toggle="modal" data-target="#modalVer" onclick="">
+									<span class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#modalVer" onclick="">
 										<span class="fa fa-eye"></span>
 									</span>
 								</td>
-							<?php elseif(!empty($user) && ($user[9]=='Administrador')): ?>
+							<?php else: ?>
 								<td style="text-align: center;" >
-									<span class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modalEditar" onclick="agregaFrmActualizar('<?php echo $mostrar[0] ?>')">
-										<span class="fa fa-pencil-square-o"></span>
-									</span>
+									<a href="#" class="btn btn-outline-secondary btn-sm"><span class="fa fa-plus-square-o"></span> Inscribir</a>
 
-									<span class="btn btn-success btn-sm" data-toggle="modal" data-target="#modalVer" onclick="">
+									<span class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#modalVer" onclick="">
 										<span class="fa fa-eye"></span>
-									</span>
-								
-									<span class="btn btn-danger btn-sm" onclick="eliminarDatos('<?php echo $mostrar[0] ?>')">
-										<span class="fa fa-trash"></span>
 									</span>
 								</td>
 							<?php endif; ?>
@@ -111,13 +123,19 @@ $result=mysqli_query($conexion,$sql);
 			data: datos,
 			url:"procesos/agregarInscripcion.php",
 			success:function(r){
-				if(r==1){
+				if(r == 1){
 					let valor = $('#valor').val();
 					$('#tablaDatatable').load('tabla.php?name_group='+valor);
 					Swal.fire(
 					'Correcto!',
 					'Se ha inscrito correctamente!',
 					'success'
+					);
+				}else if(r == 2){
+					Swal.fire(
+					'Ojo!',
+					'No te puedes inscribir debido que ya cuentas con 2 inscripciones vigentes.',
+					'warning'
 					);
 				}else{
 					Swal.fire(

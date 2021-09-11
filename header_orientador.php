@@ -4,7 +4,7 @@
     <div class="row">
       <div class="col-md-12">        
         <div >
-          <a href="index.php"><img width="215px" src="assets/Logosimbolo.png" alt="Logosena" /></a>
+          <a href="index.php"><img width="215px" src="../assets/Logosimbolo.png" alt="Logosena" /></a>
         </div>
         <nav class=" full-width NavBar-Nav">
           <div class="full-width NavBar-Nav-bg hidden-md hidden-lg show-menu-mobile"></div>
@@ -15,7 +15,7 @@
                 <div class="col-md-12">
                  <center>
                   <div >
-                    <a href="index.php"><img width="215px" src="assets/Logosimbolo.png" alt="Logosena"  /></a>
+                    <a href="index.php"><img width="215px" src="../assets/Logosimbolo.png" alt="Logosena"  /></a>
                   </div>
                 </center>
               </div>
@@ -44,10 +44,10 @@
           </li>
           <li>
             <a href="user-edit.php">
-              <i class="fa fa-user fa-fw hidden-md hidden-lg" aria-hidden="true"></i><?php echo $user['nombres']." ".$user['apellidos']; ?></a>
+              <i class="fa fa-user fa-fw hidden-md hidden-lg" aria-hidden="true"></i><?php echo $user[1]." ".$user[2]; ?></a>
             </li>
               <li class="hidden-xs hidden-sm">
-              <!--Verifica si el usuario actual tiene <foto--><img  class="NavBar-Nav-icon btn-PopUpLogin" src="assets/<?php echo $user['img'];?>" alt=""><!--</foto>-->
+              <!--Verifica si el usuario actual tiene <foto--><img  class="NavBar-Nav-icon btn-PopUpLogin" src="../assets/<?php echo $user[15];?>" alt=""><!--</foto>-->
              
             </li>
           </ul>

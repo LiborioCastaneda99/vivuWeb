@@ -51,6 +51,16 @@
 			return $datos;
 		}
 
+		public function consultarInscripcion($datos){
+			$obj =  new conectar();
+			$conexion = $obj->conexion();
+			$tildes = $conexion->query("SET NAMES 'utf8'");
+			$sql = "SELECT COUNT(id) As ContarId FROM `y_inscritos_cursos` WHERE estado = 1 AND id_usuario = ".$datos[1]."";
+			$ContarId = mysqli_fetch_row(mysqli_query($conexion,$sql))[0]['ContarId'];
+
+			return $ContarId;
+		}
+
 		public function actualizar($datos){
 			$obj= new conectar();
 			$conexion=$obj->conexion();
