@@ -1,18 +1,21 @@
 <?php
 session_start();
 
-require 'database.php';
+require_once "cursos/clases/conexion.php";
+$obj= new conectar();
+$conexion=$obj->conexion();
 
 if (isset($_SESSION['user_id'])) {
-  $records = $conn->prepare('SELECT id, nombres, apellidos, tipodocumento, documento, tipoPoblacion, email, password, fechaRegistro,rol, fecha_sesion, telefono, fechaNacimiento, municipio, sexo, img FROM users WHERE id = :id');
-  $records->bindParam(':id', $_SESSION['user_id']);
-  $records->execute();
-  $results = $records->fetch(PDO::FETCH_ASSOC);
-
+  $id = $_SESSION['user_id'];
+  $tildes = $conexion->query("SET NAMES 'utf8'");
+  $sql="SELECT id, nombres, apellidos, tipodocumento, documento, tipoPoblacion, email, password, 
+  fechaRegistro, rol, fecha_sesion, telefono, fechaNacimiento, municipio, sexo, img, centro 
+  FROM users WHERE id = $id";
+  $result_login = mysqli_fetch_row(mysqli_query($conexion,$sql));
   $user = null;
 
-  if (count($results) > 0) {
-    $user = $results;
+  if (count($result_login) > 0) {
+    $user = $result_login;
   }
 }
 
@@ -48,11 +51,13 @@ $nombre_carpeta = "";
 </style>
 </head>
 <body>
-  <?php if(!empty($user) && ($user['rol']=='Aprendiz')): ?>
+<?php if(!empty($user) && ($user[9]=='2')): ?>
   <!-- ====== Barra de navegacion ======-->
   <?php include 'header_aprendiz.php'; ?>
-
   <div class="mt-1 PopUpContainer">
+    <div class="contentContainer">
+      <ol class="breadcrumb" class="active"><li><a href="index.php">Inicio</a></li></ol>
+    </div>
     <!-- ====== PopUpLogin ======-->
     <?php include 'popupLogin_aprendiz.php'; ?>
   </div>
@@ -181,7 +186,7 @@ $nombre_carpeta = "";
     </main>
   </div>
 
-  <?php elseif(!empty($user) && ($user['rol']=='Administrador')): ?>
+  <?php elseif(!empty($user) && ($user[9]=='1')): ?>
 
   <!--Menú admin-->
   <?php include 'header_admin.php'; ?>
