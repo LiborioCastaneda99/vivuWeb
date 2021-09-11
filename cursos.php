@@ -73,7 +73,7 @@ if (isset($_SESSION['user_id'])) {
 </head>
 <body>
 
-<?php if(!empty($user) && ($user[9]=='Administrador')): ?>
+<?php if(!empty($user) && ($user[9]=='1')): ?>
   
   <!-- contenido para Administrador -->
   <?php include 'header_admin.php'; ?>
@@ -173,7 +173,7 @@ if (isset($_SESSION['user_id'])) {
 </div> 
 <!-- fin contenido para Administrador -->
 
-<?php elseif(!empty($user) && ($user[9]=='ORIENTADOR')): ?>
+<?php elseif(!empty($user) && ($user[9]=='3')): ?>
 
   <!-- contenido para ORIENTADOR -->
   <?php include 'header_orientador.php';?>
@@ -237,7 +237,7 @@ if (isset($_SESSION['user_id'])) {
 </div>
 
 
-<?php elseif(!empty($user) && ($user[9]=='Aprendiz')): ?>
+<?php elseif(!empty($user) && ($user[9]=='2')): ?>
   
   <!-- contenido para aprendiz -->
   <?php include 'header_aprendiz.php'; ?>

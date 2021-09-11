@@ -8,7 +8,11 @@
 		$_POST['idUsuario']
 				);
 
-	echo $obj->agregarInscripcion($datos);
-	
+	$contarId = $obj->consultarInscripcion($datos);
+	if($contarId == 2){
+		echo "2";
+	}else{
+		echo $obj->agregarInscripcion($datos);
+	}
 
  ?>
