@@ -56,9 +56,10 @@
 			$conexion = $obj->conexion();
 			$tildes = $conexion->query("SET NAMES 'utf8'");
 			$sql = "SELECT COUNT(id) As ContarId FROM `y_inscritos_cursos` WHERE estado = 1 AND id_usuario = ".$datos[1]."";
-			$ContarId = mysqli_fetch_row(mysqli_query($conexion,$sql))[0]['ContarId'];
+			$result = mysqli_query($conexion,$sql);
+			$ContarId = mysqli_fetch_row($result);
 
-			return $ContarId;
+			return $ContarId[0];
 		}
 
 		public function actualizar($datos){

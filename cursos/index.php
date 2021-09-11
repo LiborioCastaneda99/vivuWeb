@@ -25,6 +25,8 @@ if (isset($_SESSION['user_id'])) {
 $group = $_GET['name_group'];
 $group = (strlen($group) > 0 ) ? $group : '';
 
+$nombre_carpeta = "cursos";
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
