@@ -46,9 +46,15 @@
               </a>
             </li>
             <li>
-              <a href="user-edit.php">
-                <i class="fa fa-user fa-fw hidden-md hidden-lg" aria-hidden="true"></i><?php echo $user[1]." ".$user[2]; ?>
+            <?php if ($nombre_carpeta == "cursos"): ?>
+              <a href="../perfil.php">
+                <i class="fa fa-user fa-fw hidden-md hidden-lg" aria-hidden="true"></i><?php echo strtoupper($user[1]." ".$user[2]); ?>
               </a>
+            <?php else: ?>
+              <a href="perfil.php">
+                <i class="fa fa-user fa-fw hidden-md hidden-lg" aria-hidden="true"></i><?php echo strtoupper($user[1]." ".$user[2]); ?>
+              </a>
+            <?php endif; ?>
             </li>
             <li class="hidden-xs hidden-sm">
                 <!--Verifica si el usuario actual tiene <foto-->

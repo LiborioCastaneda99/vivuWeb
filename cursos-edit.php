@@ -73,7 +73,7 @@ if (isset($_SESSION['user_id'])) {
                 </a>
               </li>
               <li>
-                <a href="user-edit.php">
+                <a href="perfil.php">
                   <i class="fa fa-user fa-fw hidden-md hidden-lg" aria-hidden="true"></i><?php echo $user['nombres']." ".$user['apellidos']; ?></a>
                 </li>
                 <li class="hidden-xs hidden-sm">
@@ -106,7 +106,7 @@ if (isset($_SESSION['user_id'])) {
       <!-- ====== PopUpLogin ======-->
       <section class="full-width PopUpLogin PopUpLogin-2">
         <div class="full-width">
-          <a href="user-edit.php"><i class="fa fa-user fa-fw" aria-hidden="true"></i> Tu perfil</a>
+          <a href="perfil.php"><i class="fa fa-user fa-fw" aria-hidden="true"></i> Tu perfil</a>
           <a href="mis-cursos.php"><i class="fa fa-cogs fa-fw" aria-hidden="true"></i> Mis Cursos</a>
           <div role="separator" class="divider"></div>
           <a rel="nofollow" data-method="delete" href="logout.php">

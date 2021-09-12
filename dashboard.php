@@ -25,9 +25,9 @@ if (isset($_SESSION['user_id'])) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
-  <title>Mi cuenta | Oferta Complementaria</title>
+  <title>Dashboard | Oferta Complementaria</title>
   <link rel="icon" href="assets/logoSena.png">
-  <meta property="og:title" content="Mi cuenta | Oferta Complementaria">
+  <meta property="og:title" content="Dashboard | Oferta Complementaria">
   <meta name="csrf-param" content="authenticity_token" />
   <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
 
@@ -60,15 +60,6 @@ if (isset($_SESSION['user_id'])) {
         <!-- ====== PopUpLogin ======-->
         <?php include 'popupLogin_admin.php'; ?>
     </div>
-  <?php elseif ($user[9]=='2'): ?>
-    <!-- contenido para Aprendiz -->
-    <?php include 'header_aprendiz.php'; ?>
-    <div class="mt-4 PopUpContainer">
-        <div class="contentContainer">
-        </div>
-        <!-- ====== PopUpLogin ======-->
-        <?php include 'popupLogin_aprendiz.php'; ?>
-    </div>
   <?php elseif ($user[9]=='3'): ?>
     <!-- contenido para Orientador -->
     <?php include 'header_orientador.php'; ?>
@@ -98,10 +89,70 @@ if (isset($_SESSION['user_id'])) {
     </div>
   <?php endif; ?>
 
-  <div class="text-center"><br>
-    <p class="font-weight-bold">Hola, <?php echo $user[1]." ".$user[2]."."; ?></p>
-    <img src="assets/img/imgPortadaBienvenido.png" class="img-fluid" alt="">
-  </div>
+    <div class="container">
+        <div class="row mt-2">
+            <div class="col-md-3">
+                <div class="card-deck">
+                    <div class="card" style="width: 14.5rem;">
+                        <img class="card-img-top img-fluid" src="assets/img/graficoUno.png" alt="Card image cap">
+                        <div class="card-body" style="height: 9.5rem;">
+                            <h5 class="card-title text-center container">Dashboard No. 1</h5>
+                            <hr>
+                            <p class="card-text text-justify container">Grafico porcentual de los municipios que se les ha brindado curso.</p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted"><a href="graficoUno.php" class="btn btn-outline-info btn-block">Ver grafico</a></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card-deck">
+                    <div class="card" style="width: 14.5rem;">
+                        <img class="card-img-top img-fluid" src="assets/img/graficoUno.png" alt="Card image cap">
+                        <div class="card-body" style="height: 9.5rem;">
+                            <h5 class="card-title text-center container">Dashboard No. 2</h5>
+                            <hr>
+                            <p class="card-text text-justify container">Grafico porcentual de géneros.</p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted"><a href="graficoDos.php" class="btn btn-outline-info btn-block">Ver grafico</a></small>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            <div class="col-md-3">
+                <div class="card-deck">
+                    <div class="card" style="width: 14.5rem;">
+                        <img class="card-img-top img-fluid" src="assets/img/graficoUno.png" alt="Card image cap">
+                        <div class="card-body" style="height: 9.5rem;">
+                            <h5 class="card-title text-center container">Dashboard No. 3</h5>
+                            <hr>
+                            <p class="card-text text-justify container">Grafico porcentual del tipo de población atendida.</p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted"><a href="graficoTres.php" class="btn btn-outline-info btn-block">Ver grafico</a></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="card-deck">
+                    <div class="card" style="width: 14.5rem;">
+                        <img class="card-img-top img-fluid" src="assets/img/graficoUno.png" alt="Card image cap">
+                        <div class="card-body" style="height: 9.5rem;">
+                            <h5 class="card-title text-center container">Dashboard No. 4</h5>
+                            <hr>
+                            <p class="card-text text-justify container">Grafico de los cursos solicitados.</p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted"><a href="#" class="btn btn-outline-info btn-block">Ver grafico</a></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 <?php else: ?>
     

@@ -51,10 +51,16 @@
             </a>
           </li>
           <li>
-            <a href="user-edit.php">
-              <i class="fa fa-user fa-fw hidden-md hidden-lg" aria-hidden="true"></i><?php echo $user[1]." ".$user[2]; ?></a>
-            </li>
-              <li class="hidden-xs hidden-sm">
+          <?php if ($nombre_carpeta == "cursos"): ?>
+              <a href="../perfil.php">
+                <i class="fa fa-user fa-fw hidden-md hidden-lg" aria-hidden="true"></i><?php echo strtoupper($user[1]." ".$user[2]); ?>
+              </a>
+            <?php else: ?>
+              <a href="perfil.php">
+                <i class="fa fa-user fa-fw hidden-md hidden-lg" aria-hidden="true"></i><?php echo strtoupper($user[1]." ".$user[2]); ?>
+              </a>
+            <?php endif; ?>
+            <li class="hidden-xs hidden-sm">
               <?php if ($nombre_carpeta == "cursos"): ?>
                 <img  class="NavBar-Nav-icon btn-PopUpLogin" src="../assets/<?php echo $user[15];?>" alt=""><!--</foto>-->
               <?php else: ?>

@@ -43,7 +43,7 @@
             </a>
           </li>
           <li>
-            <a href="user-edit.php">
+            <a href="perfil.php">
               <i class="fa fa-user fa-fw hidden-md hidden-lg" aria-hidden="true"></i><?php echo $user['nombres']." ".$user['apellidos']; ?></a>
             </li>
            <li class="hidden-xs hidden-sm">

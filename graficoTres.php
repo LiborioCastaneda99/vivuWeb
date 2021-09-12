@@ -18,6 +18,8 @@ if (isset($_SESSION['user_id'])) {
 	  $user = $result_login;
 	}
 }
+$res = mysqli_query($conexion, "SELECT UPPER(municipio) As Mun_Poblacion, tipoPoblacion, COUNT(tipoPoblacion)As ContarPoblacion FROM `users`  where rol='Aprendiz' GROUP BY municipio,tipoPoblacion");
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -25,16 +27,46 @@ if (isset($_SESSION['user_id'])) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
-  <title>Mi cuenta | Oferta Complementaria</title>
+  <title>Dashboard | Oferta Complementaria</title>
   <link rel="icon" href="assets/logoSena.png">
-  <meta property="og:title" content="Mi cuenta | Oferta Complementaria">
+  <meta property="og:title" content="Dashboard | Oferta Complementaria">
   <meta name="csrf-param" content="authenticity_token" />
   <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
   <meta name="csrf-token" content="sD0hPoBuliGFd5InGhre2tEwqBOWq5IyYKAr5Wcj/6NdVI39jnyEqFx6JUMBQiSF2YRkJZbYZjp8VUo/qVtfog==" />
   <link rel="stylesheet" media="all" href="assets/general.css" data-turbolinks-track="reload" />
   <link rel="stylesheet" media="screen" href="assets/grupos.css" />
   <script src="assets/general.js" data-turbolinks-track="reload"></script>
+
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script type="text/javascript">
+		google.charts.load("current", {packages:["corechart"]});
+		google.charts.setOnLoadCallback(drawChart);
+		function drawChart() {
+			var data = google.visualization.arrayToDataTable([
+				['Estado', 'Cantidad'],  <?php
+
+        while($row = mysqli_fetch_array( $res )) {	
+
+          echo "['".$row['Mun_Poblacion']." -> ".$row['tipoPoblacion']."', ".$row['ContarPoblacion']."],";
+        
+        }
+        ?>
+        ]);
+
+        var options = {
+        title: 'GRAFICO PORCENTUAL DEL TIPO DE POBLACIÓN ATENTIDA',
+        is3D: true,
+        pieHole: 0.4,
+				width: 1270,
+				height: 580,
+        };
+			var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+			chart.draw(data, options);
+		}
+	</script>
+
   <style type="text/css">
     .footer_new {
       bottom: 0;
@@ -59,15 +91,6 @@ if (isset($_SESSION['user_id'])) {
         </div>
         <!-- ====== PopUpLogin ======-->
         <?php include 'popupLogin_admin.php'; ?>
-    </div>
-  <?php elseif ($user[9]=='2'): ?>
-    <!-- contenido para Aprendiz -->
-    <?php include 'header_aprendiz.php'; ?>
-    <div class="mt-4 PopUpContainer">
-        <div class="contentContainer">
-        </div>
-        <!-- ====== PopUpLogin ======-->
-        <?php include 'popupLogin_aprendiz.php'; ?>
     </div>
   <?php elseif ($user[9]=='3'): ?>
     <!-- contenido para Orientador -->
@@ -98,10 +121,13 @@ if (isset($_SESSION['user_id'])) {
     </div>
   <?php endif; ?>
 
-  <div class="text-center"><br>
-    <p class="font-weight-bold">Hola, <?php echo $user[1]." ".$user[2]."."; ?></p>
-    <img src="assets/img/imgPortadaBienvenido.png" class="img-fluid" alt="">
-  </div>
+    <div class="container">
+        <div class="row mt-2">
+            <div class="col-md-12">
+            <div id="piechart_3d" class="img-fluid"></div>
+            </div>
+        </div>
+    </div>
 
 <?php else: ?>
     

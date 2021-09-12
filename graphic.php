@@ -197,7 +197,7 @@ $resultado_consulta_cursos_solicitados = mysqli_query( $conexion, $consulta_curs
 			console.log(valor);
 			$.ajax({                        
 				type: 'get',                 
-				url : 'graphic.php',                   
+				url : 'dashboard.php',                   
 				data: {value: valor},
 				success: function(data)            
 				{

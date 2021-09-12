@@ -28,7 +28,7 @@ if ($nombre != "") {
 		$stmt = $conn->prepare($sql);
 
 		if ($stmt->execute()) {
-			echo "<script>alert('Usted ha modificado su perfil, correctamente.');window.location='user-edit.php';</script>";
+			echo "<script>alert('Usted ha modificado su perfil, correctamente.');window.location='perfil.php';</script>";
 		}  else {
 			echo 'Lo sentimos, ha ocurrido un error al momento de modificar.';
 		}
@@ -51,7 +51,7 @@ if ($nombre != "") {
 	$stmt = $conn->prepare($sql);
 
 	if ($stmt->execute()) {
-		echo "<script>alert('Usted ha modificado su perfil, correctamente.');window.location='user-edit.php';</script>";
+		echo "<script>alert('Usted ha modificado su perfil, correctamente.');window.location='perfil.php';</script>";
 	}  else {
 		echo 'Lo sentimos, ha ocurrido un error al momento de modificar.';
 	}

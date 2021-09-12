@@ -5,7 +5,7 @@
       <div class="col-md-12">        
         <div >
           <?php if ($nombre_carpeta == "cursos"): ?>
-            <a href="index.php"><img width="215px" src="../assets/Logosimbolo.png" alt="Logosena" /></a>
+            <a href="../index.php"><img width="215px" src="../assets/Logosimbolo.png" alt="Logosena" /></a>
           <?php else: ?>
             <a href="index.php"><img width="215px" src="assets/Logosimbolo.png" alt="Logosena" /></a>
           <?php endif; ?>
@@ -41,28 +41,39 @@
             </a>
           </li> 
           <li class="menu">
-            <a href="cursos.php">
-              <i class="fa fa-list-ul fa-fw hidden-md hidden-lg" aria-hidden="true"></i>CURSOS
-            </a>
+            <?php if ($nombre_carpeta == "cursos"): ?>
+              <a href="../cursos.php">
+                <i class="fa fa-list-ul fa-fw hidden-md hidden-lg" aria-hidden="true"></i>CURSOS
+              </a>
+            <?php else: ?>
+              <a href="cursos.php">
+                <i class="fa fa-list-ul fa-fw hidden-md hidden-lg" aria-hidden="true"></i>CURSOS
+              </a>
+            <?php endif; ?>
           </li> 
           <li class="menu">
-            <a href="mis-cursos.php">
-              <i class="fa fa-list-ul fa-fw hidden-md hidden-lg" aria-hidden="true"></i>CURSOS OFERTADOS
-            </a>
-          </li>
-          <?php if ($user['centro']=='OFICINA'): ?>
-          <?php else: ?>
-            <!--<li class="menu">
-              <a href="graphic.php">
-                <i class="fa fa-list-ul fa-fw hidden-md hidden-lg" aria-hidden="true"></i>DASHBOARD
+            <?php if ($nombre_carpeta == "cursos"): ?>
+              <a href="cursos_ofertados.php">
+                <i class="fa fa-list-ul fa-fw hidden-md hidden-lg" aria-hidden="true"></i>CURSOS OFERTADOS
               </a>
-            </li>-->
-          <?php endif ?>
+            <?php else: ?>
+              <a href="cursos/cursos_ofertados.php">
+                <i class="fa fa-list-ul fa-fw hidden-md hidden-lg" aria-hidden="true"></i>CURSOS OFERTADOS
+              </a>
+            <?php endif; ?>
 
+          </li>
           <li>
-            <a href="user-edit.php">
-              <i class="fa fa-user fa-fw hidden-md hidden-lg" aria-hidden="true"></i><?php echo strtoupper($user[1]." ".$user[2]); ?>
-            </a>
+            <?php if ($nombre_carpeta == "cursos"): ?>
+              <a href="../perfil.php">
+                <i class="fa fa-user fa-fw hidden-md hidden-lg" aria-hidden="true"></i><?php echo strtoupper($user[1]." ".$user[2]); ?>
+              </a>
+            <?php else: ?>
+              <a href="perfil.php">
+                <i class="fa fa-user fa-fw hidden-md hidden-lg" aria-hidden="true"></i><?php echo strtoupper($user[1]." ".$user[2]); ?>
+              </a>
+            <?php endif; ?>
+            
           </li>
           <li class="hidden-xs hidden-sm">
               <!--Verifica si el usuario actual tiene <foto-->
