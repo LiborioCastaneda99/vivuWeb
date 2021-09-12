@@ -85,7 +85,7 @@ $nombre_carpeta = "cursos";
   <!-- contenido para Administrador -->
   <?php require_once '../header_admin.php'; ?>
 
-  <div class="mt-1 PopUpContainer">
+  <div class="mt-4 PopUpContainer">
     <div class="contentContainer">
       <ol class="breadcrumb"><li><a href="index.php">Inicio</a></li><li class="active">Cursos</li></ol>
     </div>
@@ -295,7 +295,7 @@ $nombre_carpeta = "cursos";
 	<!-- contenido para Aprendiz -->
 	<?php require_once '../header_aprendiz.php'; ?>
 
-	<div class="mt-1 PopUpContainer">
+	<div class="mt-4 PopUpContainer">
 		<div class="contentContainer">
 		<ol class="breadcrumb"><li><a href="index.php">Inicio</a></li><li class="active">Cursos</li></ol>
 		</div>
@@ -323,7 +323,7 @@ $nombre_carpeta = "cursos";
 	<!-- contenido para Orientador -->
 	<?php require_once '../header_orientador.php'; ?>
 
-	<div class="mt-1 PopUpContainer">
+	<div class="mt-4 PopUpContainer">
 		<div class="contentContainer">
 		<ol class="breadcrumb"><li><a href="index.php">Inicio</a></li><li class="active">Cursos</li></ol>
 		</div>
@@ -351,7 +351,7 @@ $nombre_carpeta = "cursos";
 	<!-- contenido para Orientador -->
 	<?php require_once '../header_orientador.php'; ?>
 
-	<div class="mt-1 PopUpContainer">
+	<div class="mt-4 PopUpContainer">
 		<div class="contentContainer">
 		<ol class="breadcrumb"><li><a href="index.php">Inicio</a></li><li class="active">Cursos</li></ol>
 		</div>

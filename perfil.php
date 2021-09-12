@@ -135,64 +135,76 @@ if (isset($_SESSION['user_id'])) {
             </div><br>
           </div>
           <!-- FORMULARIO -->
-          <div class="col-md-6">
+          <div class="col-md-8">
             <h2 class="text-center">Editar datos de usuario</h2>
+            <hr>
             <form class="simple_form edit_user" id="edit_user" enctype="multipart/form-data" action="save-perfil.php" accept-charset="UTF-8" method="post">
-              <div class="form-inputs">
-                <div class="form-group string required user_nombre">
-                 <label class="control-label" for="user_nombre">Nombres</label>
-                 <input class="form-control" autofocus="autofocus" required="" aria-required="true" type="text" name="txtNombres" id="user_nombre" value="<?php echo $user['nombres']; ?>"/>
-               </div>
-               <div class="form-group user_apellidos">
-                <label class="control-label" for="user_apellidos">Apellidos</label>
-                <input class="form-control" autofocus="autofocus" required="" aria-required="true" type="text" name="txtApellidos" id="user_apellidos" value="<?php echo $user['apellidos']; ?>" />
+            
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="inputNombres">Nombres</label>
+                  <input class="form-control" autofocus="autofocus" required="" aria-required="true" type="text" name="txtNombres" id="user_nombre" value="<?php echo $user['nombres']; ?>"/>
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="inputApellidos">Apellidos</label>
+                  <input class="form-control" autofocus="autofocus" required="" aria-required="true" type="text" name="txtApellidos" id="user_apellidos" value="<?php echo $user['apellidos']; ?>" />
+                </div>
+              </div> 
+
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="inputSexo">Sexo</label>
+                  <select class="form-control" autofocus="autofocus" required="" aria-required="true" type="text" name="txtSexo" id="user_Sexo" >
+                    <option selected="true" value="<?php echo $user['sexo']; ?>"><?php echo $user['sexo']; ?></option>
+                    <option value="Femenino">Femenino</option>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Prefiero no decirlo">Prefiero no decirlo</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="inputFechaNacimiento">Fecha de nacimiento</label>
+                  <input class="form-control" required="" type="date" name="txtFechaNacimiento" id="" value="<?php echo $user['fechaNacimiento']; ?>" />
+                </div>
+              </div>  
+            
+              <div class="form-row">
+                <div class="form-group col-md-12">
+                  <label for="inputDireccion">Dirección de correo electrónico</label>
+                  <input class="form-control" required="required" type="email" value="<?php echo $user['email'];?>" name="txtCorreo" id="user_email" /><p class="help-block">Se le enviará un correo de confirmación</p>
+                </div>
+              </div> 
+
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="inputTipoDocumento">Tipo documento</label>
+                  <select class="form-control form-control-sm" name="txtTipoDocumento" id="user_tipo_documento_id">
+                    <option value="<?php echo $user['tipodocumento'];?>" selected="selected" ><?php echo $user['tipodocumento'];?></option>
+                    <option value="Cedula de Ciudadanía">Cedula de Ciudadanía</option>
+                    <option value="Cedula de Extranjeria">Cedula de Extranjeria</option>
+                    <option value="Tarjeta de Identidad">Tarjeta de Identidad</option>
+                  </select>              
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="inputDocumento">Documento</label>
+                  <input class="form-control" min="1" autofocus="autofocus" required="required" aria-required="true" type="number" step="1" value="<?php echo $user['documento'];?>" name="txtDocumento" id="user_documento" />
+                </div>
+              </div> 
+
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="inputTelefono">Telefono</label>
+                  <input class="form-control" autofocus="autofocus" required="required" aria-required="true" type="text" value="<?php echo $user['telefono'];?>" name="txtTelefono" id="user_telefono" />
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="inputMunicipio">Municipio</label>
+                  <input class="form-control" autocomplete="Municipio" autofocus="autofocus" required="" aria-required="true" type="text" value="<?php echo $user['municipio'] ?>" name="txtMunicipio" id="user_Municipio" />
+                </div>
               </div>
-            </div>
-            <div class="form-group user_apellidos">
-              <label class="control-label" for="user_apellidos">Sexo</label>
-              <select class="form-control" autofocus="autofocus" required="" aria-required="true" type="text" name="txtSexo" id="user_Sexo" >
-                <option selected="true" value="<?php echo $user['sexo']; ?>"><?php echo $user['sexo']; ?></option>
-                <option value="Femenino">Femenino</option>
-                <option value="Masculino">Masculino</option>
-                <option value="Prefiero no decirlo">Prefiero no decirlo</option>
-              </select>
-            </div>
-            <div class="form-group email required user_email">
-              <label class="control-label email required" for="user_email"><abbr title="necesario">*</abbr> Dirección de correo electrónico</label>
-              <input class="form-control string email required form-control input-lg" autofocus="autofocus" required="required" aria-required="true" type="email" value="<?php echo $user['email'];?>" name="txtCorreo" id="user_email" /><p class="help-block">Se le enviará un correo de confirmación</p>
-            </div>
-            <div class="form-group">
-              <label class="control-label" for="user_documento">Fecha de nacimiento</label>
-              <input class="form-control" required="" type="date" name="txtFechaNacimiento" id="" value="<?php echo $user['fechaNacimiento']; ?>" />
-            </div>
-            <div class="form-group string required user_telefono">
-              <label class="control-label string required" for="user_telefono"><abbr title="necesario">*</abbr> Telefono</label>
-              <input class="form-control string required form-control input-lg" autofocus="autofocus" required="required" aria-required="true" type="text" value="<?php echo $user['telefono'];?>" name="txtTelefono" id="user_telefono" />
-            </div>
-            <div class="form-group">
-              <div class="form-group select required user_tipo_documento">
-                <label class="control-label select required" for="user_tipo_documento_id"><abbr title="necesario">*</abbr> Tipo documento</label>
-                <select class="form-control select required form-control input-lg" name="txtTipoDocumento" id="user_tipo_documento_id">
-                  <option value="<?php echo $user['tipodocumento'];?>" selected="selected" ><?php echo $user['tipodocumento'];?></option>
-                  <option value="Cedula de Ciudadanía">Cedula de Ciudadanía</option>
-                  <option value="Cedula de Extranjeria">Cedula de Extranjeria</option>
-                  <option value="Tarjeta de Identidad">Tarjeta de Identidad</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="form-group integer required user_documento">
-                <label class="control-label integer required" for="user_documento"><abbr title="necesario">*</abbr> Documento</label>
-                <input class="form-control numeric integer required form-control input-lg" min="1" autofocus="autofocus" required="required" aria-required="true" type="number" step="1" value="<?php echo $user['documento'];?>" name="txtDocumento" id="user_documento" />
-              </div>
-              <div class="form-group">
-                <label class="control-label" for="user_email">Municipio</label>
-                <input class="form-control" autocomplete="Municipio" autofocus="autofocus" required="" aria-required="true" type="text" value="<?php echo $user['municipio'] ?>" name="txtMunicipio" id="user_Municipio" />
-              </div>
-              <div class="form-group">
-                <div class="form-group select required user_tipo_de_poblacion">
-                  <label class="control-label select required" for="user_tipo_de_poblacion_id"><abbr title="necesario">*</abbr> Tipo de poblacion</label>
-                  <select class="form-control select required form-control input-lg" name="txtTipoPoblacion" id="user_tipo_de_poblacion_id">
+              
+              <div class="form-row">
+                <div class="form-group col-md-12">
+                  <label class="control-label" for="user_tipo_de_poblacion_id">Tipo de poblacion</label>
+                  <select class="form-control select" name="txtTipoPoblacion" id="user_tipo_de_poblacion_id">
                     <option value="<?php echo $user['tipoPoblacion']; ?>" selected="true" ><?php echo $user['tipoPoblacion']; ?></option>
                     <option value="Desplazados por la violencia">Desplazados por la violencia</option>
                     <option value="Víctimas del conflicto armado">Víctimas del conflicto armado</option>
@@ -215,37 +227,44 @@ if (isset($_SESSION['user_id'])) {
                     <option value="Soldados campesinos">Soldados campesinos</option>
                     <option value="Sobrevivientes minas antipersonas">Sobrevivientes minas antipersonas</option>
                     <option value="Comunidad LGBTI">Comunidad LGBTI</option>
-                  </select>
+                  </select>              
                 </div>
               </div>
-              <div class="form-group password optional user_password">
-                <label class="control-label password optional" for="user_password">Contraseña</label>
-                <input class="form-control password optional form-control input-lg" autocomplete="new-password" type="password" name="user[password]" id="user_password" /><p class="help-block">Deje los campos de contraseñas vacios si no desea actualizarla</p>
-              </div>
-              <div class="form-group password optional user_password_confirmation">
-                <label class="control-label password optional" for="user_password_confirmation">Confirmación de la contraseña</label>
-                <input class="form-control password optional form-control input-lg" autocomplete="new-password" type="password" name="user[password_confirmation]" id="user_password_confirmation" />
-              </div>
-              <div class="form-group password required user_current_password">
-                <label class="control-label password required" for="user_current_password"><abbr title="necesario">*</abbr> Contraseña actual</label>
-                <input class="form-control password required form-control input-lg" autocomplete="current-password"  aria-required="true" type="password" name="user[current_password]" id="user_current_password" /><p class="help-block">Se necesita su contraseña actual para confirmar</p>
-              </div>
-              <div class="form-group file optional user_perfil">
-                <label class="control-label file optional" for="user_perfil">Foto de Perfil</label>
-                <input class="file optional" type="file" name="archivo" id="user_perfil" />
-              </div>
-            </div>
-            <input type="hidden" value="<?php echo $user['id'];?>" name="txtCodigo">
-            <div class="form-actions">
-              <input type="submit" name="commit" value="Actualizar datos" class="btn btn-default btn btn-nar btn-lg " data-disable-with="Actualizar datos" />
-            </div>
-          </div>
-        </form>            
-      </div>
 
+              <div class="form-row">
+                <div class="form-group col-md-4">
+                  <label for="inputContrasena">Contraseña nueva</label>
+                  <input class="form-control" autocomplete="new-password" type="password" name="user[password]" id="user_password" /><p class="help-block">Deje los campos de contraseñas vacios si no desea actualizarla.</p>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="inputContrasena">Repita la contraseña</label>
+                  <input class="form-control" autocomplete="new-password" type="password" name="user[password]" id="user_password" /><p class="help-block">Deje los campos de contraseñas vacios si no desea actualizarla.</p>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="inputContrasena">Contraseña actual</label>
+                  <input class="form-control" autocomplete="current-password"  aria-required="true" type="password" name="user[current_password]" id="user_current_password" /><p class="help-block">Si cambió la clave, se necesita su contraseña actual para confirmar.</p>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-md-12">
+                  <label for="inputContrasena">Nueva Foto de Perfil</label>
+                  <input class="file optional" type="file" name="archivo" id="user_perfil" />
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-md-12">
+                  <input type="hidden" value="<?php echo $user['id'];?>" name="txtCodigo">
+                  <input type="submit" name="commit" value="Actualizar datos" class="btn btn-outline-secondary btn-block" data-disable-with="Actualizar datos" />
+                </div>
+              </div>
+            </form>            
+          </div>       
+        </div>
+      </div>
     </div>
-  </div>
-</div>  
+  </div>  
 
 <?php else: ?>
   <?php echo "<script>window.location='sign_in.php';</script>"; ?>
@@ -285,7 +304,7 @@ if (isset($_SESSION['user_id'])) {
 <!-- ====== Pie de pagina ======-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="assets/main.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
+<link rel="stylesheet" href="assets/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js" integrity="sha384-XTs3FgkjiBgo8qjEjBk0tGmf3wPrWtA6coPfQDfFEY8AnYJwjalXCiosYRBIBZX8" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>

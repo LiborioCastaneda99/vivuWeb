@@ -5,7 +5,7 @@
       <div class="col-md-12">        
         <div>
           <?php if ($nombre_carpeta == "cursos"): ?>
-            <a href="index.php"><img width="215px" src="../assets/Logosimbolo.png" alt="Logosena" /></a>
+            <a href="../index.php"><img width="215px" src="../assets/Logosimbolo.png" alt="Logosena" /></a>
           <?php else: ?>
             <a href="index.php"><img width="215px" src="assets/Logosimbolo.png" alt="Logosena" /></a>
           <?php endif; ?>
@@ -41,9 +41,15 @@
               </a>
             </li> 
             <li class="menu">
+            <?php if ($nombre_carpeta == "cursos"): ?>
+              <a href="../cursos.php">
+                <i class="fa fa-list-ul fa-fw hidden-md hidden-lg" aria-hidden="true"></i> CURSOS
+              </a>
+            <?php else: ?>
               <a href="cursos.php">
                 <i class="fa fa-list-ul fa-fw hidden-md hidden-lg" aria-hidden="true"></i> CURSOS
               </a>
+            <?php endif; ?>
             </li>
             <li>
             <?php if ($nombre_carpeta == "cursos"): ?>

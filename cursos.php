@@ -80,7 +80,7 @@ $nombre_carpeta = "";
   <!-- contenido para Administrador -->
   <?php include 'header_admin.php'; ?>
 
-  <div class="mt-1 PopUpContainer">
+  <div class="mt-2 PopUpContainer">
     <div class="contentContainer">
       <ol class="breadcrumb"><li><a href="index.php">Inicio</a></li><li class="active">Cursos</li></ol>
     </div>
@@ -180,7 +180,7 @@ $nombre_carpeta = "";
   <!-- contenido para ORIENTADOR -->
   <?php include 'header_orientador.php';?>
 
-  <div class="mt-1 PopUpContainer">
+  <div class="mt-2 PopUpContainer">
     <div class="contentContainer">
       <ol class="breadcrumb"><li><a href="index.php">Inicio</a></li><li class="active">Cursos</li></ol>
     </div>
@@ -244,7 +244,7 @@ $nombre_carpeta = "";
   <!-- contenido para aprendiz -->
   <?php include 'header_aprendiz.php'; ?>
 
-  <div class="mt-1 PopUpContainer">
+  <div class="mt-2 PopUpContainer">
     <div class="contentContainer">
       <ol class="breadcrumb"><li><a href="index.php">Inicio</a></li><li class="active">Cursos</li></ol>
     </div>
@@ -301,7 +301,7 @@ $nombre_carpeta = "";
   <!-- contenido para publico -->
   <?php include 'header.php'; ?>
 
-  <div class="mt-1 PopUpContainer">
+  <div class="mt-2 PopUpContainer">
     <div class="contentContainer">
       <ol class="breadcrumb"><li><a href="index.php">Inicio</a></li><li class="active">Cursos</li></ol>
     </div>

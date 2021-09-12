@@ -80,7 +80,7 @@ $nombre_carpeta = "cursos";
 	<!-- contenido para Aprendiz -->
 	<?php require_once '../header_aprendiz.php'; ?>
 
-	<div class="mt-1 PopUpContainer">
+	<div class="mt-4 PopUpContainer">
 		<div class="contentContainer">
 		<ol class="breadcrumb"><li><a href="../index.php">Inicio</a></li><li class="active">Mis Cursos Inscritos</li></ol>
 		</div>
