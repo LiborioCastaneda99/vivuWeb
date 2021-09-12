@@ -4,7 +4,11 @@
     <div class="row">
       <div class="col-md-12">        
        <div class="">
-        <a href="index.php"><img src="assets/Logosimbolo.png" alt="Logosena" width="215px" /></a>
+          <?php if ($nombre_carpeta == "cursos"): ?>
+            <a href="index.php"><img width="215px" src="../assets/Logosimbolo.png" alt="Logosena" /></a>
+          <?php else: ?>
+            <a href="index.php"><img width="215px" src="assets/Logosimbolo.png" alt="Logosena" /></a>
+          <?php endif; ?>
       </div>
       <nav class=" full-width NavBar-Nav">
         <div class="full-width NavBar-Nav-bg hidden-md hidden-lg show-menu-mobile"></div>
@@ -15,7 +19,11 @@
               <div class="col-md-12">
                <center>
                 <div class="">
-                  <a href="index.php"><img src="assets/Logosimbolo.png" alt="Logosena" width="215px"  /></a>
+                  <?php if ($nombre_carpeta == "cursos"): ?>
+                    <a href="index.php"><img width="215px" src="../assets/Logosimbolo.png" alt="Logosena" /></a>
+                  <?php else: ?>
+                    <a href="index.php"><img width="215px" src="assets/Logosimbolo.png" alt="Logosena" /></a>
+                  <?php endif; ?>
                 </div>
               </center>
             </div>

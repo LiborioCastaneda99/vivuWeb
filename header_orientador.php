@@ -4,7 +4,11 @@
     <div class="row">
       <div class="col-md-12">        
         <div >
-          <a href="index.php"><img width="215px" src="../assets/Logosimbolo.png" alt="Logosena" /></a>
+          <?php if ($nombre_carpeta == "cursos"): ?>
+            <a href="index.php"><img width="215px" src="../assets/Logosimbolo.png" alt="Logosena" /></a>
+          <?php else: ?>
+            <a href="index.php"><img width="215px" src="assets/Logosimbolo.png" alt="Logosena" /></a>
+          <?php endif; ?>
         </div>
         <nav class=" full-width NavBar-Nav">
           <div class="full-width NavBar-Nav-bg hidden-md hidden-lg show-menu-mobile"></div>
@@ -15,7 +19,11 @@
                 <div class="col-md-12">
                  <center>
                   <div >
-                    <a href="index.php"><img width="215px" src="../assets/Logosimbolo.png" alt="Logosena"  /></a>
+                  <?php if ($nombre_carpeta == "cursos"): ?>
+                    <a href="index.php"><img width="215px" src="../assets/Logosimbolo.png" alt="Logosena" /></a>
+                  <?php else: ?>
+                    <a href="index.php"><img width="215px" src="assets/Logosimbolo.png" alt="Logosena" /></a>
+                  <?php endif; ?>
                   </div>
                 </center>
               </div>
@@ -47,8 +55,11 @@
               <i class="fa fa-user fa-fw hidden-md hidden-lg" aria-hidden="true"></i><?php echo $user[1]." ".$user[2]; ?></a>
             </li>
               <li class="hidden-xs hidden-sm">
-              <!--Verifica si el usuario actual tiene <foto--><img  class="NavBar-Nav-icon btn-PopUpLogin" src="../assets/<?php echo $user[15];?>" alt=""><!--</foto>-->
-             
+              <?php if ($nombre_carpeta == "cursos"): ?>
+                <img  class="NavBar-Nav-icon btn-PopUpLogin" src="../assets/<?php echo $user[15];?>" alt=""><!--</foto>-->
+              <?php else: ?>
+                <img  class="NavBar-Nav-icon btn-PopUpLogin" src="../assets/<?php echo $user[15];?>" alt=""><!--</foto>-->
+              <?php endif; ?>
             </li>
           </ul>
         </nav>
