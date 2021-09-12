@@ -29,7 +29,7 @@ $nombre_carpeta = "cursos";
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
   
-  <title>Cursos | Oferta Complementaria</title>
+  <title>Mis Cursos Inscritos| Oferta Complementaria</title>
   <meta property="og:title" content="Cursos | Oferta Complementaria">
 
   <link rel="icon" href="../assets/logoSena.png">
@@ -82,7 +82,7 @@ $nombre_carpeta = "cursos";
 
 	<div class="mt-1 PopUpContainer">
 		<div class="contentContainer">
-		<ol class="breadcrumb"><li><a href="../index.php">Inicio</a></li><li class="active">Cursos</li></ol>
+		<ol class="breadcrumb"><li><a href="../index.php">Inicio</a></li><li class="active">Mis Cursos Inscritos</li></ol>
 		</div>
 		<?php require_once '../popupLogin_aprendiz.php'; ?>
 	</div>
