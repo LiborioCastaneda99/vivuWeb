@@ -15,6 +15,8 @@ if (isset($_SESSION['user_id'])) {
     $user = $results;
   }
 }
+
+$nombre_carpeta = "";
 ?>
 <!DOCTYPE html>
 <html>
