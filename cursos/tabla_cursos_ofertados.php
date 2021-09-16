@@ -19,9 +19,16 @@ if (isset($_SESSION['user_id'])) {
 	  $user = $result_login;
 	}
 }
+$centro = $user[16];
+
+if ($centro == "" || $centro == "OFICINA") {
+	$centro = "";
+}else{
+	$centro = "WHERE centro = '{$user[16]}'";
+}
 
 $tildes = $conexion->query("SET NAMES 'utf8'");
-$sql="SELECT id, codigo_curso, curso, jornada, horario, intensidad, fecha_inicio, municipio, direccion, formacion, centro, descripcion, estado FROM cursos";
+$sql="SELECT id, codigo_curso, curso, jornada, horario, intensidad, fecha_inicio, municipio, direccion, formacion, centro, descripcion, estado FROM cursos $centro";
 $result=mysqli_query($conexion,$sql);
 
 ?>
@@ -43,7 +50,8 @@ $result=mysqli_query($conexion,$sql);
                     <th>Centro</th>
                     <th>Estado</th>
                     <th>No. Inscritos</th>
-                    <th>Acción</th>
+                    <th>Ver Detalle</th>
+                    <th>Inscribir</th>
 				</tr>
 			</thead>
 			
@@ -64,11 +72,16 @@ $result=mysqli_query($conexion,$sql);
 							<td><?php echo strtoupper($mostrar[10]); ?></td>
 							<td><?php echo strtoupper($mostrar[12]); ?></td>
 							<td>
-                                <?php echo "<b>".$contarInscritos = mysqli_fetch_row(mysqli_query($conexion, "SELECT COUNT(`inscritos-cursos`.`id`) As contarInscritos FROM users,`inscritos-cursos`, cursos 
-                                WHERE users.documento=`inscritos-cursos`.`documento` and `inscritos-cursos`.codigo_curso=cursos.codigo_curso and `inscritos-cursos`.estado='Inscrito' and cursos.codigo_curso=".$mostrar[1].""))[0]."</b>";?>
+                                <?php echo "<b>".$contarInscritos = mysqli_fetch_row(mysqli_query($conexion, "SELECT COUNT(YIC.id_curso) AS ContarInscritos, C.curso FROM y_inscritos_cursos YIC
+																												INNER JOIN users U ON U.id = YIC.id_usuario 
+																												INNER JOIN cursos C ON C.id = YIC.id_curso
+																												WHERE YIC.estado = 1 AND C.id =".$mostrar[0].""))[0]."</b>";?>
                             </td>
                             <td>
-							    <a href="inscritos_cursos.php?id=<?php echo $mostrar[1] ?>" class="btn btn-outline-info btn-sm"><span class="fa fa-eye"></span> </a>
+							    <a href="inscritos_cursos.php?id=<?php echo $mostrar[0] ?>" class="btn btn-outline-info btn-sm"><span class="fa fa-eye"></span> </a>
+                            </td>
+                            <td>
+							    <a href="inscribir_aprendiz_.php?id=<?php echo $mostrar[0] ?>" class="btn btn-outline-success btn-sm"><span class="fa fa-user-o"></span> </a>
                             </td>
 						</tr>
 					<?php 

@@ -23,6 +23,9 @@ if (isset($_SESSION['user_id'])) {
 }
 
 $group = $_GET['name_group'];
+if($group == "Salud Ocupacional"){
+	$group = "Salud";
+}
 $group = (strlen($group) > 0 ) ? $group : '';
 
 $nombre_carpeta = "cursos";
@@ -41,11 +44,9 @@ $nombre_carpeta = "cursos";
   <link rel="icon" href="../assets/logoSena.png">
   <meta name="csrf-param" content="authenticity_token" />
   <link rel="stylesheet" href="../font-awesome-4.7.0/css/font-awesome.min.css">
-  <meta name="csrf-token" content="sD0hPoBuliGFd5InGhre2tEwqBOWq5IyYKAr5Wcj/6NdVI39jnyEqFx6JUMBQiSF2YRkJZbYZjp8VUo/qVtfog==" />
 
   <link rel="stylesheet" media="all" href="../assets/general.css" data-turbolinks-track="reload" />
   <link rel="stylesheet" media="screen" href="../assets/grupos.css" />
-  <script src="http://www.vivu.com.co/assets/general.js" data-turbolinks-track="reload"></script>
   <?php require_once "scripts.php";  ?>
 
   <style type="text/css">
@@ -87,7 +88,7 @@ $nombre_carpeta = "cursos";
 
   <div class="mt-4 PopUpContainer">
     <div class="contentContainer">
-      <ol class="breadcrumb"><li><a href="index.php">Inicio</a></li><li class="active">Cursos</li></ol>
+      <ol class="breadcrumb"><li><a href="../index.php">Inicio</a></li><li class="active">Cursos</li></ol>
     </div>
     <?php require_once '../popupLogin_admin.php'; ?>
   </div>
@@ -297,7 +298,7 @@ $nombre_carpeta = "cursos";
 
 	<div class="mt-4 PopUpContainer">
 		<div class="contentContainer">
-		<ol class="breadcrumb"><li><a href="index.php">Inicio</a></li><li class="active">Cursos</li></ol>
+		<ol class="breadcrumb"><li><a href="../index.php">Inicio</a></li><li class="active">Cursos</li></ol>
 		</div>
 		<?php require_once '../popupLogin_aprendiz.php'; ?>
 	</div>
@@ -325,7 +326,7 @@ $nombre_carpeta = "cursos";
 
 	<div class="mt-4 PopUpContainer">
 		<div class="contentContainer">
-		<ol class="breadcrumb"><li><a href="index.php">Inicio</a></li><li class="active">Cursos</li></ol>
+		<ol class="breadcrumb"><li><a href="../index.php">Inicio</a></li><li class="active">Cursos</li></ol>
 		</div>
 		<?php require_once '../popupLogin_orientador.php'; ?>
 	</div>
@@ -349,13 +350,13 @@ $nombre_carpeta = "cursos";
 <?php else: ?>
   
 	<!-- contenido para Orientador -->
-	<?php require_once '../header_orientador.php'; ?>
+	<?php require_once '../header.php'; ?>
 
 	<div class="mt-4 PopUpContainer">
 		<div class="contentContainer">
 		<ol class="breadcrumb"><li><a href="index.php">Inicio</a></li><li class="active">Cursos</li></ol>
 		</div>
-		<?php require_once '../popupLogin_orientador.php'; ?>
+		<?php require_once '../header.php'; ?>
 	</div>
 
 	<input type="hidden" value="<?php echo $group?>" name= "valor" id="valor">
@@ -389,59 +390,106 @@ $nombre_carpeta = "cursos";
 	$(document).ready(function(){
 		$('#btnAgregarnuevo').click(function(){
 			datos=$('#frmnuevo').serialize();
+			
+			var idCurso = document.getElementsByName("idCurso")[0].value;
+            var curso = document.getElementsByName("curso")[0].value;
+            var nombre_grupo = document.getElementsByName("nombre_grupo")[0].value;
+            var centro = document.getElementsByName("centro")[0].value;
+            var horario = document.getElementsByName("horario")[0].value;
+            var intensidad = document.getElementsByName("intensidad")[0].value;
+            var fecha_inicio = document.getElementsByName("fecha_inicio")[0].value;
+            var municipio = document.getElementsByName("municipio")[0].value;
+            var direccion = document.getElementsByName("direccion")[0].value;
+            var formacion = document.getElementsByName("formacion")[0].value;
+            var estado = document.getElementsByName("estado")[0].value;
+			var jornada = document.getElementsByName("jornada")[0].value;
+			var descripcion = document.getElementsByName("descripcion")[0].value;
 
-			$.ajax({
-				type:"POST",
-				data:datos,
-				url:"procesos/agregar.php",
-				success:function(r){
-					if(r==1){
-						$('#agregarnuevosdatosmodal').modal('toggle');
-						$('#frmnuevo')[0].reset();
-						let valor = $('#valor').val();
-						$('#tablaDatatable').load('tabla.php?name_group='+valor);
-						Swal.fire(
-						'Correcto!',
-						'Se ha guardado correctamente!',
-						'success'
-						);
-					}else{
-						Swal.fire(
-						'Error!',
-						'No se ha guardado correctamente!',
-						'error'
-						);
+            if ((idCurso == "") || (curso == "")|| (nombre_grupo == "")|| (centro == "")|| (horario == "")|| (intensidad == "")|| (fecha_inicio == "")
+            || (municipio == "")|| (direccion == "")|| (formacion == "")|| (estado == "")|| (jornada == "")|| (descripcion == "")) {  //COMPRUEBA CAMPOS VACIOS
+                Swal.fire({
+                icon: 'error',
+                text: 'Por favor revisar, hay campos vacidos.',
+                showConfirmButton: false,
+                timer: 1500
+                })
+			}else{
+				$.ajax({
+					type:"POST",
+					data:datos,
+					url:"procesos/agregar.php",
+					success:function(r){
+						if(r==1){
+							$('#agregarnuevosdatosmodal').modal('toggle');
+							$('#frmnuevo')[0].reset();
+							let valor = $('#valor').val();
+							$('#tablaDatatable').load('tabla.php?name_group='+valor);
+							Swal.fire(
+							'Correcto!',
+							'Se ha guardado correctamente!',
+							'success'
+							);
+						}else{
+							Swal.fire(
+							'Error!',
+							'No se ha guardado correctamente!',
+							'error'
+							);
+						}
 					}
-				}
-			});
+				});
+			}
+				
 		});
 
 		$('#btnActualizar').click(function(){
 			datos=$('#frmnuevoU').serialize();
+			var cursoU = document.getElementsByName("cursoU")[0].value;
+            var jornadaU = document.getElementsByName("jornadaU")[0].value;
+            var nombre_grupoU = document.getElementsByName("nombre_grupoU")[0].value;
+            var centroU = document.getElementsByName("centroU")[0].value;
+            var horarioU = document.getElementsByName("horarioU")[0].value;
+            var intensidadU = document.getElementsByName("intensidadU")[0].value;
+            var fecha_inicioU = document.getElementsByName("fecha_inicioU")[0].value;
+            var municipioU = document.getElementsByName("municipioU")[0].value;
+            var direccionU = document.getElementsByName("direccionU")[0].value;
+            var formacionU = document.getElementsByName("formacionU")[0].value;
+            var estadoU = document.getElementsByName("estadoU")[0].value;
+			var descripcionU = document.getElementsByName("descripcionU")[0].value;
 
-			$.ajax({
-				type:"POST",
-				data:datos,
-				url:"procesos/actualizar.php",
-				success:function(r){
-					if(r==1){
-						$('#modalEditar').modal('toggle');
-						let valor = $('#valor').val();
-						$('#tablaDatatable').load('tabla.php?name_group='+valor);
-						Swal.fire(
-						'Correcto!',
-						'Se ha actualizado correctamente!',
-						'success'
-						);					
-					}else{
-						Swal.fire(
-						'Error!',
-						'No se ha actualizado correctamente!',
-						'error'
-						);					
+            if ((cursoU == "") || (jornadaU == "")|| (nombre_grupoU == "")|| (centroU == "")|| (horarioU == "")|| (intensidadU == "")|| (fecha_inicioU == "")
+            || (municipioU == "")|| (direccionU == "")|| (formacionU == "")|| (estadoU == "")|| (descripcionU == "")) {  //COMPRUEBA
+                Swal.fire({
+                icon: 'error',
+                text: 'Por favor revisar, hay campos vacidos.',
+                showConfirmButton: false,
+                timer: 1500
+                })
+			}else{
+				$.ajax({
+					type:"POST",
+					data:datos,
+					url:"procesos/actualizar.php",
+					success:function(r){
+						if(r==1){
+							$('#modalEditar').modal('toggle');
+							let valor = $('#valor').val();
+							$('#tablaDatatable').load('tabla.php?name_group='+valor);
+							Swal.fire(
+							'Correcto!',
+							'Se ha actualizado correctamente!',
+							'success'
+							);					
+						}else{
+							Swal.fire(
+							'Error!',
+							'No se ha actualizado correctamente!',
+							'error'
+							);					
+						}
 					}
-				}
-			});
+				});
+			}
 		});
 	});
 </script>

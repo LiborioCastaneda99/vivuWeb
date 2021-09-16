@@ -53,12 +53,12 @@
           </li> 
           <li class="menu">
             <?php if ($nombre_carpeta == "cursos"): ?>
-              <a href="cursos_ofertados.php">
-                <i class="fa fa-list-ul fa-fw hidden-md hidden-lg" aria-hidden="true"></i>CURSOS OFERTADOS
+              <a href="../noticias.php">
+                <i class="fa fa-list-ul fa-fw hidden-md hidden-lg" aria-hidden="true"></i>NOTICIAS
               </a>
             <?php else: ?>
-              <a href="cursos/cursos_ofertados.php">
-                <i class="fa fa-list-ul fa-fw hidden-md hidden-lg" aria-hidden="true"></i>CURSOS OFERTADOS
+              <a href="noticias.php">
+                <i class="fa fa-list-ul fa-fw hidden-md hidden-lg" aria-hidden="true"></i>NOTICIAS
               </a>
             <?php endif; ?>
 

@@ -38,9 +38,16 @@
             </a>
           </li>
           <li class="menu">
-            <a href="mis-cursos.php">
-              <i class="fa fa-list-ul fa-fw hidden-md hidden-lg" aria-hidden="true"></i> CURSOS OFERTADOS
-            </a>
+            <?php if ($nombre_carpeta == "cursos"): ?>
+              <a href="../noticias.php">
+                <i class="fa fa-list-ul fa-fw hidden-md hidden-lg" aria-hidden="true"></i>NOTICIAS
+              </a>
+            <?php else: ?>
+              <a href="noticias.php">
+                <i class="fa fa-list-ul fa-fw hidden-md hidden-lg" aria-hidden="true"></i>NOTICIAS
+              </a>
+            <?php endif; ?>
+
           </li>
           <li>
             <a href="perfil.php">

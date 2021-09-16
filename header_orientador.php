@@ -46,9 +46,16 @@
             </a>
           </li>
           <li class="menu">
-            <a href="cursos_or.php?curs=<?php echo $user['centro']; ?>">
-              <i class="fa fa-list-ul fa-fw hidden-md hidden-lg" aria-hidden="true"></i> CURSOS OFERTADOS
-            </a>
+            <?php if ($nombre_carpeta == "cursos"): ?>
+              <a href="../noticias.php">
+                <i class="fa fa-list-ul fa-fw hidden-md hidden-lg" aria-hidden="true"></i>NOTICIAS
+              </a>
+            <?php else: ?>
+              <a href="noticias.php">
+                <i class="fa fa-list-ul fa-fw hidden-md hidden-lg" aria-hidden="true"></i>NOTICIAS
+              </a>
+            <?php endif; ?>
+
           </li>
           <li>
           <?php if ($nombre_carpeta == "cursos"): ?>
@@ -64,7 +71,7 @@
               <?php if ($nombre_carpeta == "cursos"): ?>
                 <img  class="NavBar-Nav-icon btn-PopUpLogin" src="../assets/<?php echo $user[15];?>" alt=""><!--</foto>-->
               <?php else: ?>
-                <img  class="NavBar-Nav-icon btn-PopUpLogin" src="../assets/<?php echo $user[15];?>" alt=""><!--</foto>-->
+                <img  class="NavBar-Nav-icon btn-PopUpLogin" src="assets/<?php echo $user[15];?>" alt=""><!--</foto>-->
               <?php endif; ?>
             </li>
           </ul>

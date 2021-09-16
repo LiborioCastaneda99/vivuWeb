@@ -1,5 +1,6 @@
  <section class="full-width PopUpLogin PopUpLogin-2">
   <div class="full-width">
+    <a href="micuenta.php"><i class="fa fa-user fa-fw" aria-hidden="true"></i> Mi cuenta</a>
     <a href="perfil.php"><i class="fa fa-user fa-fw" aria-hidden="true"></i> Tu perfil</a>
     <?php if ($nombre_carpeta == "cursos"): ?>
       <a href="cursos_ofertados.php"><i class="fa fa-cogs fa-fw" aria-hidden="true"></i> Cursos ofertados</a>

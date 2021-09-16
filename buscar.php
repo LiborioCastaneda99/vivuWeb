@@ -1,19 +1,22 @@
-<?php
+<?php 
 session_start();
 
-require 'database.php';
+require_once "cursos/clases/conexion.php";
+$obj= new conectar();
+$conexion=$obj->conexion();
 
 if (isset($_SESSION['user_id'])) {
-  $records = $conn->prepare('SELECT id, nombres, apellidos, tipodocumento, documento, tipoPoblacion, email, password, fechaRegistro,rol, fecha_sesion, telefono, fechaNacimiento, municipio, sexo, img FROM users WHERE id = :id');
-  $records->bindParam(':id', $_SESSION['user_id']);
-  $records->execute();
-  $results = $records->fetch(PDO::FETCH_ASSOC);
-
-  $user = null;
-
-  if (count($results) > 0) {
-    $user = $results;
-  }
+	$id = $_SESSION['user_id'];
+	$tildes = $conexion->query("SET NAMES 'utf8'");
+	$sql="SELECT id, nombres, apellidos, tipodocumento, documento, tipoPoblacion, email, password, 
+	fechaRegistro, rol, fecha_sesion, telefono, fechaNacimiento, municipio, sexo, img, centro 
+	FROM users WHERE id = $id";
+	$result_login = mysqli_fetch_array(mysqli_query($conexion,$sql));
+	$user = null;
+  
+	if (count($result_login) > 0) {
+	  $user = $result_login;
+	}
 }
 ?>
 <!DOCTYPE html>
@@ -47,7 +50,7 @@ if (isset($_SESSION['user_id'])) {
 </style>
 </head>
 <body>
-  <?php if(!empty($user) && ($user['rol']=='Administrador')): ?>
+  <?php if(!empty($user) && ($user['rol']=='1')): ?>
 
   <!-- menu-->
   <?php include 'header_admin.php'; ?>
@@ -141,7 +144,7 @@ if (isset($_SESSION['user_id'])) {
 
 ?>
 
-</div> <?php elseif(!empty($user) && ($user['rol']=='ORIENTADOR')): ?>
+</div> <?php elseif(!empty($user) && ($user['rol']=='2')): ?>
     <!-- ====== Barra de navegacion ======-->
     <?php  include 'header_orientador.php';?>
 
@@ -235,7 +238,7 @@ if (isset($_SESSION['user_id'])) {
 
 ?>
 </div>
-  <?php elseif(!empty($user) && ($user['rol']=='Aprendiz')): ?>
+  <?php elseif(!empty($user) && ($user['rol']=='3')): ?>
   <!-- menu-->
   <?php include 'header_aprendiz.php'; ?>
 
@@ -366,7 +369,7 @@ if (isset($_SESSION['user_id'])) {
         }
 
         $result = $db->query($query);
-//      echo "Has buscado la palabra clave:<b> ". $_POST['PalabraClave']."</b>";
+      //      echo "Has buscado la palabra clave:<b> ". $_POST['PalabraClave']."</b>";
 
         if(mysqli_num_rows($result) > 0) {
           $row_count=0;
@@ -450,7 +453,7 @@ if (isset($_SESSION['user_id'])) {
 <!-- ====== Pie de pagina ======-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="assets/main.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js" integrity="sha384-XTs3FgkjiBgo8qjEjBk0tGmf3wPrWtA6coPfQDfFEY8AnYJwjalXCiosYRBIBZX8" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>

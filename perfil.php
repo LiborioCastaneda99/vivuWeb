@@ -256,7 +256,7 @@ if (isset($_SESSION['user_id'])) {
               <div class="form-row">
                 <div class="form-group col-md-12">
                   <input type="hidden" value="<?php echo $user['id'];?>" name="txtCodigo">
-                  <input type="submit" name="commit" value="Actualizar datos" class="btn btn-outline-secondary btn-block" data-disable-with="Actualizar datos" />
+                  <input type="submit" name="commit" value="Actualizar datos" class="btn btn-outline-primary btn-block" data-disable-with="Actualizar datos" />
                 </div>
               </div>
             </form>            
@@ -300,11 +300,10 @@ if (isset($_SESSION['user_id'])) {
 </script>
 <!-- Demo ads. Please ignore and remove. -->
 <script src="http://cdn.tutorialzine.com/misc/enhance/v2.js" async></script>
-<script src="assets/nombre_grupos-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.js"></script>
 <!-- ====== Pie de pagina ======-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="assets/main.js"></script>
-<link rel="stylesheet" href="assets/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
+<link rel="stylesheet" href="assets/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js" integrity="sha384-XTs3FgkjiBgo8qjEjBk0tGmf3wPrWtA6coPfQDfFEY8AnYJwjalXCiosYRBIBZX8" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>

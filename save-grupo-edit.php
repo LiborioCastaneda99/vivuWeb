@@ -1,5 +1,8 @@
 <?php
-require 'database.php';
+require_once "cursos/clases/conexion.php";
+$obj= new conectar();
+$conexion=$obj->conexion();
+$tildes = $conexion->query("SET NAMES 'utf8'");
 
 $Codigo=$_POST['txtCodigo'];
 $Nombre_Grupo=$_POST['txtNombre'];
@@ -11,14 +14,14 @@ $ruta = $_FILES['archivo']['tmp_name'];
 
 $destino = "assets/" .time(). $nombre;
 $destinon = time(). $nombre;
+
 if ($nombre != "") {
 	if (copy($ruta, $destino)) {
 
 		$sql="UPDATE grupos SET nombre_grupo='$Nombre_Grupo', tipo_archivo='$tipo', nombre_archivo='$destinon' WHERE id='$Codigo'";
+		$res = mysqli_query($conexion,$sql);
 
-		$stmt = $conn->prepare($sql);
-
-		if ($stmt->execute()) {
+		if ($res > 0) {
 			echo "<script>alert('Usted ha modificado el grupo, correctamente.');window.location='cursos.php';</script>";
 		}  else {
 			echo 'Lo sentimos, ha ocurrido un error al momento de modificar.';
@@ -26,11 +29,10 @@ if ($nombre != "") {
 	}
 }else{
 	
-	$sql="UPDATE grupos SET nombre_grupo='$Nombre_Grupo',  nombre_archivo='$Img' WHERE id='$Codigo'";
+	$sql="UPDATE grupos SET nombre_grupo='$Nombre_Grupo' WHERE id='$Codigo'";
+	$res = mysqli_query($conexion,$sql);
 
-	$stmt = $conn->prepare($sql);
-
-	if ($stmt->execute()) {
+	if ($res > 0) {
 		echo "<script>alert('Usted ha modificado el grupo, correctamente.');window.location='cursos.php';</script>";
 	}  else {
 		echo 'Lo sentimos, ha ocurrido un error al momento de modificar.';

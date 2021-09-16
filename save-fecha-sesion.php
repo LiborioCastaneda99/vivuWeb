@@ -1,16 +1,15 @@
 <?php
-require 'database.php';
- $fecha=date('y-m-d');
- echo $fecha;
-    $Correo_Electronico=$_POST['email'];
-		$sql="UPDATE users SET fecha_sesion='$fecha' WHERE email='$Correo_Electronico'";
 
-		$stmt = $conn->prepare($sql);
+	require_once "cursos/clases/conexion.php";
+	$obj= new conectar();
+	$conexion=$obj->conexion();
+	$tildes = $conexion->query("SET NAMES 'utf8'");
 
-		if ($stmt->execute()) {
-		//	echo "<script>alert('Usted ha modificado el grupo, correctamente.');window.location='cursos.php';</script>";
-		}  else {
-		//	echo 'Lo sentimos, ha ocurrido un error al momento de modificar.';
-		}
-	
+	$fecha=date('y-m-d');
+
+	$Correo_Electronico=$_POST['email'];
+	$sql="UPDATE users SET fecha_sesion='$fecha' WHERE email='$Correo_Electronico'";
+
+	$stmt = mysqli_query($conexion, $sql);
+
 ?>

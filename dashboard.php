@@ -146,7 +146,7 @@ if (isset($_SESSION['user_id'])) {
                             <p class="card-text text-justify container">Grafico de los cursos solicitados.</p>
                         </div>
                         <div class="card-footer">
-                            <small class="text-muted"><a href="#" class="btn btn-outline-info btn-block">Ver grafico</a></small>
+                            <small class="text-muted"><a href="graficoCuatro.php" class="btn btn-outline-info btn-block">Ver grafico</a></small>
                         </div>
                     </div>
                 </div>

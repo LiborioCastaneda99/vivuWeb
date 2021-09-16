@@ -20,7 +20,12 @@ if (isset($_SESSION['user_id'])) {
 	}
 }
 $tildes = $conexion->query("SET NAMES 'utf8'");
-$sql="SELECT `id`, `codigo_curso`, `curso`, `jornada`, `horario`, `intensidad`, `fecha_inicio`, `municipio`, direccion, `formacion`, `centro`, `descripcion`, `documento`, `estado` FROM `inscritos-cursos` where documento=".$user[4]."";
+$sql="SELECT YIC.id, YIC.id_curso, C.curso, C.jornada,  C.horario,  C.intensidad,  C.fecha_inicio,  C.municipio,  C.direccion,  C.formacion,  C.centro,  C.descripcion, U.documento, YE.nombre
+FROM y_inscritos_cursos YIC
+INNER JOIN cursos C ON C.id = YIC.id_curso
+INNER JOIN users U ON U.id = YIC.id_usuario
+INNER JOIN y_estado YE ON YE.id = YIC.estado
+WHERE YIC.id_usuario = {$user[0]} AND YIC.estado = 1";
 $result=mysqli_query($conexion,$sql);
 
 ?>

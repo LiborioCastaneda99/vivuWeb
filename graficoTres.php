@@ -18,7 +18,7 @@ if (isset($_SESSION['user_id'])) {
 	  $user = $result_login;
 	}
 }
-$res = mysqli_query($conexion, "SELECT UPPER(municipio) As Mun_Poblacion, tipoPoblacion, COUNT(tipoPoblacion)As ContarPoblacion FROM `users`  where rol='Aprendiz' GROUP BY municipio,tipoPoblacion");
+$res = mysqli_query($conexion, "SELECT UPPER(municipio) As Mun_Poblacion, tipoPoblacion, COUNT(tipoPoblacion)As ContarPoblacion FROM `users`  where rol='2' GROUP BY municipio,tipoPoblacion");
 
 ?>
 <!DOCTYPE html>

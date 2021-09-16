@@ -39,7 +39,6 @@ $nombre_carpeta = "cursos";
 
   <link rel="stylesheet" media="all" href="../assets/general.css" data-turbolinks-track="reload" />
   <link rel="stylesheet" media="screen" href="../assets/grupos.css" />
-  <script src="http://www.vivu.com.co/assets/general.js" data-turbolinks-track="reload"></script>
   <?php require_once "scripts.php";  ?>
 
 

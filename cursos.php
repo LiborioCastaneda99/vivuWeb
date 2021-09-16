@@ -4,9 +4,10 @@ session_start();
 require_once "cursos/clases/conexion.php";
 $obj= new conectar();
 $conexion=$obj->conexion();
+
 $tildes = $conexion->query("SET NAMES 'utf8'");
-$sql="SELECT id, nombre_grupo, nombre_archivo FROM grupos";
-$result_cursos=mysqli_query($conexion,$sql);
+$contarId=mysqli_query($conexion, "SELECT id FROM grupos");
+$num_total_rows = mysqli_num_rows($contarId);
 
 if (isset($_SESSION['user_id'])) {
   $id = $_SESSION['user_id'];
@@ -37,7 +38,6 @@ $nombre_carpeta = "";
   <link rel="icon" href="assets/logoSena.png">
   <meta name="csrf-param" content="authenticity_token" />
   <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
-  <meta name="csrf-token" content="sD0hPoBuliGFd5InGhre2tEwqBOWq5IyYKAr5Wcj/6NdVI39jnyEqFx6JUMBQiSF2YRkJZbYZjp8VUo/qVtfog==" />
 
   <link rel="stylesheet" media="all" href="assets/general.css" data-turbolinks-track="reload" />
   <link rel="stylesheet" media="screen" href="assets/grupos.css" />
@@ -91,84 +91,149 @@ $nombre_carpeta = "";
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title " id="exampleModalLabel" style="font-size: 28px; text-align:center;"><i class="fa fa-book" aria-hidden="true"></i> CREAR NUEVO GRUPO<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+          <h5 class="modal-title " id="exampleModalLabel" style="font-size: 28px; text-align:center;">
+            <i class="fa fa-book" aria-hidden="true"></i> 
+              Crear Nuevo Grupo
           </button></h5>
         </div>
         <div class="modal-body">
-          <form action="save_grupo.php" method="POST" enctype="multipart/form-data">
+          <form action="cursos/procesos/guardarGrupo.php" method="POST" enctype="multipart/form-data">
             <div class="form-group">
               <label for="txtNombre" class="col-form-label"><i class="fa fa-vcard" aria-hidden="true"></i> Nombre</label>
-              <input type="text" class="form-control" id="txtNombre" name="txtNombrerequired=">
+              <input type="text" class="form-control" id="txtNombre" name="txtNombre">
             </div>   
             <div class="form-group">
               <label for="archivo" class="col-form-label"><i class="fa fa-book" aria-hidden="true"></i> Imagen de presentación:</label>
-              <input type="file" class="form-control" name="archivo" required="">
+              <input type="file" class="form btn-block" name="archivo" required="">
             </div>
             </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            <input type="submit" value="Guardar grupo" class="btn" style="background-color: #FF6C00; color: white; border-color: #FF6C00; ">
+            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
+            <input type="submit" value="Guardar grupo" class="btn btn-outline-primary">
           </div>
         </form>
       </div>
     </div>
   </div>
 
-  <div class="container down">
-    <section class="down">
-      <h2 class="text-center"> Ofertas por área</h2>
-      <form method="post" class="form" action="buscar.php">
-
-        <div class="col-md-6">
-          <label class="sr-only" for="inlineFormInput">Curso</label>
-          <input  name="PalabraClave" type="text" class="form-control" id="inlineFormInput"  placeholder="Busca por palabra o el curso que deseas..." value="">  
-        </div>
-
-        <div class="col-md-3">
-          <button type="submit" name="search" id="search-btn" class="btn form-control" style="background-color: #FF6C00; color: white; font-size: 13px;"><i class="fa fa-search"></i></button>     
-        </div>
-
-      </form>
-
-      <div class="col-md-3">
-        <a href="" class="btn"  data-toggle="modal" data-target="#exampleModal"  style="background-color: #FF6C00; color: white;"><i class="fa fa-plus"></i> Nuevo grupo</a>
-      </div>
-
+  <div class="container">
+    <section class="">
       <div class="container">
-        <?php
-          while ($row=mysqli_fetch_row($result_cursos)) 
-          {
-            ?>    
-              <div class="col-lg-2 col-md-4 col-sm-3 col-xs-6">
-                <a href="cursos/index.php?name_group=<?php echo $row[1];?>">
-                  <div class="full-width post">
-                    <figure class="full-width post-img">
-                      <!-- Tamaño de la imagen 248x186 pixeles-->
-                      <img src="http://www.vivu.com.co/assets/<?php echo $row[2];?>" alt="Defaultimage" />
-                      <div class="divider"></div>
-                    </figure>
-                    <div class="full-width post-info">
-                      <p class="full-width post-info-price nom_gru" style="font-size: 13px;">
-                        <?php $nombre=$row[1]; echo $nombre;?>
-                      </p>
-                      <p class="full-width color_norm nom_gru" style="font-size: 13px;">
-                        Cursos Abiertos: 
-                          <?php 
-                            $contarActivo = mysqli_query($conexion, "SELECT COUNT(curso) As ContarC FROM cursos where nombre_grupo='$nombre' and estado='Activo'");
-                            echo mysqli_fetch_row($contarActivo)[0];
-                          ?>
-                      </p>
-                      <p class="full-width post-info-price nom_gru">
-                        <a href="edit_grupo.php?id=<?php echo $row[0]; ?>" class="" style="color: #ff6c00;" style="font-size: 13px;"> Editar grupo</a>
-                      </p>
-                    </div>
-                  </div>
-                </a>                 
+        <div class="row mt-1">
+          <div class="col-sm-12">
+            <div class="card">
+              <div class="card-header text-center">
+                Ofertas por área
               </div>
-            <?php
-          }
-        ?>
+              <div class="card-body">
+                <div class="row mt-1">
+                <form method="post" class="form" action="buscar.php">
+
+                  <div class="col-md-6">
+                    <input  name="PalabraClave" type="text" class="form-control" id="inlineFormInput"  placeholder="Busca por palabra o el grupo que deseas..." value="">  
+                  </div>
+                  <div class="col-md-3">
+                    <button type="submit" name="search" id="search-btn" class="btn btn-outline-primary btn-block"><i class="fa fa-search"></i></button>     
+                  </div>
+
+                </form> 
+                <div class="col-md-3">
+                  <a href="" class="btn btn-outline-primary btn-block"  data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus"></i> Nuevo grupo</a>
+                </div>
+                </div>
+              <hr>
+                <?php
+
+                  if ($num_total_rows > 0) {
+                    $page = false;
+
+                    //examino la pagina a mostrar y el inicio del registro a mostrar
+                    if (isset($_GET["page"])) {
+                      $page = $_GET["page"];
+                    }
+
+                    if (!$page) {
+                      $start = 0;
+                      $page = 1;
+                    } else {
+                      $start = ($page - 1) * 12;
+                    }
+
+                    //calculo el total de paginas
+                    $total_pages = ceil($num_total_rows / 12);
+
+                    //pongo el n�mero de registros total, el tama�o de p�gina y la p�gina que se muestra
+                    $tildes = $conexion->query("SET NAMES 'utf8'");
+                    $sql="SELECT id, nombre_grupo, nombre_archivo FROM grupos LIMIT ".$start.", 12";
+                    $result_cursos=mysqli_query($conexion,$sql);
+                    $contarId= mysqli_num_rows($result_cursos);
+
+                    if ($contarId > 0) {
+                    
+                      while ($row=mysqli_fetch_row($result_cursos))
+                       
+                      {
+                        ?>    
+                          <div class="col-lg-2 col-md-4 col-sm-3 col-xs-6">
+                            <a href="cursos/index.php?name_group=<?php echo $row[1];?>">
+                              <div class="full-width post">
+                                <figure class="full-width post-img">
+                                  <!-- Tamaño de la imagen 248x186 pixeles-->
+                                  <img src="http://www.vivu.com.co/assets/<?php echo $row[2];?>" alt="Defaultimage" />
+                                  <div class="divider"></div>
+                                </figure>
+                                <div class="full-width post-info">
+                                  <p class="full-width post-info-price nom_gru" style="font-size: 13px;">
+                                    <?php $nombre=$row[1]; echo $nombre; ?>
+                                  </p>
+                                  <p class="full-width color_norm nom_gru" style="font-size: 13px;">
+                                    Cursos Abiertos: 
+                                      <?php 
+                                        $contarActivo = mysqli_query($conexion, "SELECT COUNT(id) As ContarC FROM cursos where nombre_grupo='$nombre' and estado='Activo'");
+                                        echo mysqli_fetch_row($contarActivo)[0];
+                                      ?>
+                                  </p>
+                                  <p class="full-width post-info-price nom_gru">
+                                    <a href="editar_grupo.php?id=<?php echo $row[0]; ?>" class="" style="color: #ff6c00;" style="font-size: 13px;"> Editar grupo</a>
+                                  </p>
+                                </div>
+                              </div>
+                            </a>                 
+                          </div>
+                        <?php
+                      }
+                    }
+          
+                    echo "<center>";
+                    echo '<nav class="" aria-label="Page navigation example ">';
+                    echo '<ul class="pagination">';
+            
+                    if ($total_pages > 1) {
+                      if ($page != 1) {
+                        echo '<li class="page-item"><a class="page-link" href="cursos.php?page='.($page-1).'"><span aria-hidden="true">&laquo;</span></a></li>';
+                      }
+            
+                      for ($i=1;$i<=$total_pages;$i++) {
+                        if ($page == $i) {
+                          echo '<li class="page-item active"><a class="page-link" href="#">'.$page.'</a></li>';
+                        } else {
+                          echo '<li class="page-item"><a class="page-link" href="cursos.php?page='.$i.'">'.$i.'</a></li>';
+                        }
+                      }
+            
+                      if ($page != $total_pages) {
+                        echo '<li class="page-item"><a class="page-link" href="cursos.php?page='.($page+1).'"><span aria-hidden="true">&raquo;</span></a></li>';
+                      }
+                    }
+                    echo '</ul>';
+                    echo '</nav>';
+                    echo '</center>';
+                  }  
+                ?>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   </div>
@@ -188,51 +253,118 @@ $nombre_carpeta = "";
     <?php  include 'popupLogin_orientador.php';?>
   </div>
 
-  <div class="container down">
-    <section class="down">
-      <h2 class="text-center"> Ofertas por área</h2>
-      <form method="post" class="form" action="buscar.php">
-        <div class="col-md-9">
-          <label class="sr-only" for="inlineFormInput">Curso</label>
-          <input  name="PalabraClave" type="text" class="form-control" id="inlineFormInput"  placeholder="Busca por palabra o el curso que deseas..." value="">  
-        </div>
-
-        <div class="col-md-3">
-          <button type="submit" name="search" id="search-btn" class="btn form-control" style="background-color: #FF6C00; color: white; font-size: 13px;"><i class="fa fa-search"></i></button>     
-        </div>
-      </form>
-     
+  <div class="container">
+    <section class="">
       <div class="container">
-        <?php
-          while ($row=mysqli_fetch_row($result_cursos)) 
-          {
-            ?>    
-              <div class="col-lg-2 col-md-4 col-sm-3 col-xs-6">
-                <a href="cursos/index.php?name_group=<?php echo $row[1];?>">
-                  <div class="full-width post">
-                    <figure class="full-width post-img">
-                      <!-- Tamaño de la imagen 248x186 pixeles-->
-                      <img src="http://www.vivu.com.co/assets/<?php echo $row[2];?>" alt="Defaultimage" />
-                      <div class="divider"></div>
-                    </figure>
-                    <div class="full-width post-info">
-                      <p class="full-width post-info-price nom_gru" style="font-size: 13px;">
-                        <?php $nombre=$row[1]; echo $nombre;?>
-                      </p>
-                      <p class="full-width color_norm nom_gru" style="font-size: 13px;">
-                        Cursos Abiertos: 
-                          <?php 
-                            $contarActivo = mysqli_query($conexion, "SELECT COUNT(curso) As ContarC FROM cursos where nombre_grupo='$nombre' and estado='Activo'");
-                            echo mysqli_fetch_row($contarActivo)[0];
-                          ?>
-                      </p>
-                    </div>
-                  </div>
-                </a>                            
+        <div class="row mt-1">
+          <div class="col-sm-12">
+            <div class="card">
+              <div class="card-header text-center">
+                Ofertas por área
               </div>
-            <?php
-          }
-        ?>
+              <div class="card-body">
+                <div class="row mt-1">
+                <form method="post" class="form" action="buscar.php">
+
+                  <div class="col-md-9">
+                    <input  name="PalabraClave" type="text" class="form-control" id="inlineFormInput"  placeholder="Busca por palabra o el grupo que deseas..." value="">  
+                  </div>
+                  <div class="col-md-3">
+                    <button type="submit" name="search" id="search-btn" class="btn btn-outline-primary btn-block"><i class="fa fa-search"></i></button>     
+                  </div>
+
+                </form>
+                </div>
+              <hr>
+                <?php
+
+                  if ($num_total_rows > 0) {
+                    $page = false;
+
+                    //examino la pagina a mostrar y el inicio del registro a mostrar
+                    if (isset($_GET["page"])) {
+                      $page = $_GET["page"];
+                    }
+
+                    if (!$page) {
+                      $start = 0;
+                      $page = 1;
+                    } else {
+                      $start = ($page - 1) * 12;
+                    }
+
+                    //calculo el total de paginas
+                    $total_pages = ceil($num_total_rows / 12);
+
+                    //pongo el n�mero de registros total, el tama�o de p�gina y la p�gina que se muestra
+                    $tildes = $conexion->query("SET NAMES 'utf8'");
+                    $sql="SELECT id, nombre_grupo, nombre_archivo FROM grupos LIMIT ".$start.", 12";
+                    $result_cursos=mysqli_query($conexion,$sql);
+                    $contarId= mysqli_num_rows($result_cursos);
+
+                    if ($contarId > 0) {
+                    
+                      while ($row=mysqli_fetch_row($result_cursos))
+                       
+                      {
+                        ?>    
+                          <div class="col-lg-2 col-md-4 col-sm-3 col-xs-6">
+                            <a href="cursos/index.php?name_group=<?php echo $row[1];?>">
+                              <div class="full-width post">
+                                <figure class="full-width post-img">
+                                  <!-- Tamaño de la imagen 248x186 pixeles-->
+                                  <img src="http://www.vivu.com.co/assets/<?php echo $row[2];?>" alt="Defaultimage" />
+                                  <div class="divider"></div>
+                                </figure>
+                                <div class="full-width post-info">
+                                  <p class="full-width post-info-price nom_gru" style="font-size: 13px;">
+                                    <?php $nombre=$row[1]; echo $nombre;?>
+                                  </p>
+                                  <p class="full-width color_norm nom_gru" style="font-size: 13px;">
+                                    Cursos Abiertos: 
+                                      <?php 
+                                        $contarActivo = mysqli_query($conexion, "SELECT COUNT(curso) As ContarC FROM cursos where nombre_grupo='$nombre' and estado='Activo'");
+                                        echo mysqli_fetch_row($contarActivo)[0];
+                                      ?>
+                                  </p>
+                                </div>
+                              </div>
+                            </a>                 
+                          </div>
+                        <?php
+                      }
+                    }
+          
+                    echo "<center>";
+                    echo '<nav class="" aria-label="Page navigation example ">';
+                    echo '<ul class="pagination">';
+            
+                    if ($total_pages > 1) {
+                      if ($page != 1) {
+                        echo '<li class="page-item"><a class="page-link" href="cursos.php?page='.($page-1).'"><span aria-hidden="true">&laquo;</span></a></li>';
+                      }
+            
+                      for ($i=1;$i<=$total_pages;$i++) {
+                        if ($page == $i) {
+                          echo '<li class="page-item active"><a class="page-link" href="#">'.$page.'</a></li>';
+                        } else {
+                          echo '<li class="page-item"><a class="page-link" href="cursos.php?page='.$i.'">'.$i.'</a></li>';
+                        }
+                      }
+            
+                      if ($page != $total_pages) {
+                        echo '<li class="page-item"><a class="page-link" href="cursos.php?page='.($page+1).'"><span aria-hidden="true">&raquo;</span></a></li>';
+                      }
+                    }
+                    echo '</ul>';
+                    echo '</nav>';
+                    echo '</center>';
+                  }  
+                ?>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   </div>
@@ -254,42 +386,118 @@ $nombre_carpeta = "";
 
   </div>
 
-  <div class="container down">
-    <section class="down">
-
-      <h2 class="text-center"> Ofertas por área</h2>
-     
+  <div class="container">
+    <section class="">
       <div class="container">
-        <?php
-          while ($row=mysqli_fetch_row($result_cursos)) 
-          {
-            ?>    
-              <div class="col-lg-2 col-md-4 col-sm-3 col-xs-6">
-                <a href="cursos/index.php?name_group=<?php echo $row[1];?>">
-                  <div class="full-width post">
-                    <figure class="full-width post-img">
-                      <!-- Tamaño de la imagen 248x186 pixeles-->
-                      <img src="http://www.vivu.com.co/assets/<?php echo $row[2];?>" alt="Defaultimage" />
-                      <div class="divider"></div>
-                    </figure>
-                    <div class="full-width post-info">
-                      <p class="full-width post-info-price nom_gru" style="font-size: 13px;">
-                        <?php $nombre=$row[1]; echo $nombre;?>
-                      </p>
-                      <p class="full-width color_norm nom_gru" style="font-size: 13px;">
-                        Cursos Abiertos: 
-                          <?php 
-                            $contarActivo = mysqli_query($conexion, "SELECT COUNT(curso) As ContarC FROM cursos where nombre_grupo='$nombre' and estado='Activo'");
-                            echo mysqli_fetch_row($contarActivo)[0];
-                          ?>
-                      </p>
-                    </div>
-                  </div>
-                </a>                            
+        <div class="row mt-1">
+          <div class="col-sm-12">
+            <div class="card">
+              <div class="card-header text-center">
+                Ofertas por área
               </div>
-            <?php
-          }
-        ?>
+              <div class="card-body">
+                <div class="row mt-1">
+                <form method="post" class="form" action="buscar.php">
+
+                  <div class="col-md-9">
+                    <input  name="PalabraClave" type="text" class="form-control" id="inlineFormInput"  placeholder="Busca por palabra o el grupo que deseas..." value="">  
+                  </div>
+                  <div class="col-md-3">
+                    <button type="submit" name="search" id="search-btn" class="btn btn-outline-primary btn-block"><i class="fa fa-search"></i></button>     
+                  </div>
+
+                </form>
+                </div>
+              <hr>
+                <?php
+
+                  if ($num_total_rows > 0) {
+                    $page = false;
+
+                    //examino la pagina a mostrar y el inicio del registro a mostrar
+                    if (isset($_GET["page"])) {
+                      $page = $_GET["page"];
+                    }
+
+                    if (!$page) {
+                      $start = 0;
+                      $page = 1;
+                    } else {
+                      $start = ($page - 1) * 12;
+                    }
+
+                    //calculo el total de paginas
+                    $total_pages = ceil($num_total_rows / 12);
+
+                    //pongo el n�mero de registros total, el tama�o de p�gina y la p�gina que se muestra
+                    $tildes = $conexion->query("SET NAMES 'utf8'");
+                    $sql="SELECT id, nombre_grupo, nombre_archivo FROM grupos LIMIT ".$start.", 12";
+                    $result_cursos=mysqli_query($conexion,$sql);
+                    $contarId= mysqli_num_rows($result_cursos);
+
+                    if ($contarId > 0) {
+                    
+                      while ($row=mysqli_fetch_row($result_cursos))
+                       
+                      {
+                        ?>    
+                          <div class="col-lg-2 col-md-4 col-sm-3 col-xs-6">
+                            <a href="cursos/index.php?name_group=<?php echo $row[1];?>">
+                              <div class="full-width post">
+                                <figure class="full-width post-img">
+                                  <!-- Tamaño de la imagen 248x186 pixeles-->
+                                  <img src="http://www.vivu.com.co/assets/<?php echo $row[2];?>" alt="Defaultimage" />
+                                  <div class="divider"></div>
+                                </figure>
+                                <div class="full-width post-info">
+                                  <p class="full-width post-info-price nom_gru" style="font-size: 13px;">
+                                    <?php $nombre=$row[1]; echo $nombre;?>
+                                  </p>
+                                  <p class="full-width color_norm nom_gru" style="font-size: 13px;">
+                                    Cursos Abiertos: 
+                                      <?php 
+                                        $contarActivo = mysqli_query($conexion, "SELECT COUNT(id) As ContarC FROM cursos where nombre_grupo='$nombre' and estado='Activo'");
+                                        echo mysqli_fetch_row($contarActivo)[0];
+                                      ?>
+                                  </p>
+                                </div>
+                              </div>
+                            </a>                 
+                          </div>
+                        <?php
+                      }
+                    }
+          
+                    echo "<center>";
+                    echo '<nav class="" aria-label="Page navigation example ">';
+                    echo '<ul class="pagination">';
+            
+                    if ($total_pages > 1) {
+                      if ($page != 1) {
+                        echo '<li class="page-item"><a class="page-link" href="cursos.php?page='.($page-1).'"><span aria-hidden="true">&laquo;</span></a></li>';
+                      }
+            
+                      for ($i=1;$i<=$total_pages;$i++) {
+                        if ($page == $i) {
+                          echo '<li class="page-item active"><a class="page-link" href="#">'.$page.'</a></li>';
+                        } else {
+                          echo '<li class="page-item"><a class="page-link" href="cursos.php?page='.$i.'">'.$i.'</a></li>';
+                        }
+                      }
+            
+                      if ($page != $total_pages) {
+                        echo '<li class="page-item"><a class="page-link" href="cursos.php?page='.($page+1).'"><span aria-hidden="true">&raquo;</span></a></li>';
+                      }
+                    }
+                    echo '</ul>';
+                    echo '</nav>';
+                    echo '</center>';
+                  }  
+                ?>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   </div>
@@ -307,51 +515,118 @@ $nombre_carpeta = "";
     </div>
   </div>
 
-  <div class="container down">
-    <section class="down">
-      <h2 class="text-center"> Ofertas por área</h2>
-      <form method="post" class="form" action="buscar.php">
-        <div class="col-md-9">
-          <label class="sr-only" for="inlineFormInput">Curso</label>
-          <input  name="PalabraClave" type="text" class="form-control" id="inlineFormInput"  placeholder="Busca por palabra o el curso que deseas..." value="">  
-        </div>
-
-        <div class="col-md-3">
-          <button type="submit" name="search" id="search-btn" class="btn form-control" style="background-color: #FF6C00; color: white; font-size: 13px;"><i class="fa fa-search"></i></button>     
-        </div>
-      </form>
-     
+  <div class="container">
+    <section class="">
       <div class="container">
-        <?php
-          while ($row=mysqli_fetch_row($result_cursos)) 
-          {
-            ?>    
-              <div class="col-lg-2 col-md-4 col-sm-3 col-xs-6">
-                <a href="cursos/index.php?name_group=<?php echo $row[1];?>">
-                  <div class="full-width post">
-                    <figure class="full-width post-img">
-                      <!-- Tamaño de la imagen 248x186 pixeles-->
-                      <img src="http://www.vivu.com.co/assets/<?php echo $row[2];?>" alt="Defaultimage" />
-                      <div class="divider"></div>
-                    </figure>
-                    <div class="full-width post-info">
-                      <p class="full-width post-info-price nom_gru" style="font-size: 13px;">
-                        <?php $nombre=$row[1]; echo $nombre;?>
-                      </p>
-                      <p class="full-width color_norm nom_gru" style="font-size: 13px;">
-                        Cursos Abiertos: 
-                          <?php 
-                            $contarActivo = mysqli_query($conexion, "SELECT COUNT(curso) As ContarC FROM cursos where nombre_grupo='$nombre' and estado='Activo'");
-                            echo mysqli_fetch_row($contarActivo)[0];
-                          ?>
-                      </p>
-                    </div>
-                  </div>
-                </a>                            
+        <div class="row mt-1">
+          <div class="col-sm-12">
+            <div class="card">
+              <div class="card-header text-center">
+                Ofertas por área
               </div>
-            <?php
-          }
-        ?>
+              <div class="card-body">
+                <div class="row mt-1">
+                <form method="post" class="form" action="buscar.php">
+
+                  <div class="col-md-9">
+                    <input  name="PalabraClave" type="text" class="form-control" id="inlineFormInput"  placeholder="Busca por palabra o el grupo que deseas..." value="">  
+                  </div>
+                  <div class="col-md-3">
+                    <button type="submit" name="search" id="search-btn" class="btn btn-outline-primary btn-block"><i class="fa fa-search"></i></button>     
+                  </div>
+
+                </form>
+                </div>
+              <hr>
+                <?php
+
+                  if ($num_total_rows > 0) {
+                    $page = false;
+
+                    //examino la pagina a mostrar y el inicio del registro a mostrar
+                    if (isset($_GET["page"])) {
+                      $page = $_GET["page"];
+                    }
+
+                    if (!$page) {
+                      $start = 0;
+                      $page = 1;
+                    } else {
+                      $start = ($page - 1) * 12;
+                    }
+
+                    //calculo el total de paginas
+                    $total_pages = ceil($num_total_rows / 12);
+
+                    //pongo el n�mero de registros total, el tama�o de p�gina y la p�gina que se muestra
+                    $tildes = $conexion->query("SET NAMES 'utf8'");
+                    $sql="SELECT id, nombre_grupo, nombre_archivo FROM grupos LIMIT ".$start.", 12";
+                    $result_cursos=mysqli_query($conexion,$sql);
+                    $contarId= mysqli_num_rows($result_cursos);
+
+                    if ($contarId > 0) {
+                    
+                      while ($row=mysqli_fetch_row($result_cursos))
+                       
+                      {
+                        ?>    
+                          <div class="col-lg-2 col-md-4 col-sm-3 col-xs-6">
+                            <a href="cursos/index.php?name_group=<?php echo $row[1];?>">
+                              <div class="full-width post">
+                                <figure class="full-width post-img">
+                                  <!-- Tamaño de la imagen 248x186 pixeles-->
+                                  <img src="http://www.vivu.com.co/assets/<?php echo $row[2];?>" alt="Defaultimage" />
+                                  <div class="divider"></div>
+                                </figure>
+                                <div class="full-width post-info">
+                                  <p class="full-width post-info-price nom_gru" style="font-size: 13px;">
+                                    <?php $nombre=$row[1]; echo $nombre;?>
+                                  </p>
+                                  <p class="full-width color_norm nom_gru" style="font-size: 13px;">
+                                    Cursos Abiertos: 
+                                      <?php 
+                                        $contarActivo = mysqli_query($conexion, "SELECT COUNT(curso) As ContarC FROM cursos where nombre_grupo='$nombre' and estado='Activo'");
+                                        echo mysqli_fetch_row($contarActivo)[0];
+                                      ?>
+                                  </p>
+                                </div>
+                              </div>
+                            </a>                 
+                          </div>
+                        <?php
+                      }
+                    }
+          
+                    echo "<center>";
+                    echo '<nav class="" aria-label="Page navigation example ">';
+                    echo '<ul class="pagination">';
+            
+                    if ($total_pages > 1) {
+                      if ($page != 1) {
+                        echo '<li class="page-item"><a class="page-link" href="cursos.php?page='.($page-1).'"><span aria-hidden="true">&laquo;</span></a></li>';
+                      }
+            
+                      for ($i=1;$i<=$total_pages;$i++) {
+                        if ($page == $i) {
+                          echo '<li class="page-item active"><a class="page-link" href="#">'.$page.'</a></li>';
+                        } else {
+                          echo '<li class="page-item"><a class="page-link" href="cursos.php?page='.$i.'">'.$i.'</a></li>';
+                        }
+                      }
+            
+                      if ($page != $total_pages) {
+                        echo '<li class="page-item"><a class="page-link" href="cursos.php?page='.($page+1).'"><span aria-hidden="true">&raquo;</span></a></li>';
+                      }
+                    }
+                    echo '</ul>';
+                    echo '</nav>';
+                    echo '</center>';
+                  }  
+                ?>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   </div>
@@ -368,11 +643,10 @@ $nombre_carpeta = "";
 
 <!-- Demo ads. Please ignore and remove. -->
 <script src="http://cdn.tutorialzine.com/misc/enhance/v2.js" async></script>
-<script src="http://www.vivu.com.co/assets/nombre_grupos-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.js"></script>
 <!-- ====== Pie de pagina ======-->
+<link rel="stylesheet" href="assets/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="http://www.vivu.com.co/assets/main.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js" integrity="sha384-XTs3FgkjiBgo8qjEjBk0tGmf3wPrWtA6coPfQDfFEY8AnYJwjalXCiosYRBIBZX8" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>

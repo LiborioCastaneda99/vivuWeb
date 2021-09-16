@@ -18,7 +18,7 @@ if (isset($_SESSION['user_id'])) {
 	  $user = $result_login;
 	}
 }
-$res = mysqli_query($conexion, "SELECT UPPER(sexo) As sexo, COUNT(sexo) As ContarSexo FROM `users` where rol='Aprendiz' GROUP BY sexo");
+$res = mysqli_query($conexion, "SELECT UPPER(sexo) As sexo, COUNT(sexo) As ContarSexo FROM `users` where rol='2' GROUP BY sexo");
 
 ?>
 <!DOCTYPE html>

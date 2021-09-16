@@ -1,37 +1,51 @@
 <?php 
-include ("conexion.php");
-$Correo=$_POST['txtCorreo'];
 
-$sql_c="SELECT count(password) As ConteoPass,email, password FROM users where email='$Correo'";
-$res_c=mysqli_query($cn,$sql_c);
+require_once "cursos/clases/conexion.php";
+$obj= new conectar();
+$conexion=$obj->conexion();
+$tildes = $conexion->query("SET NAMES 'utf8'");
 
-$data_C=mysqli_fetch_array($res_c);
+$Correo_Electronico=$_POST['txtCorreo'];
 
-$Clave_Recuperada=$data_C['password'];
-$Correo_Recuperado=$data_C['email'];
-$Conteo=$data_C['ConteoPass'];
-if (($Conteo>0) && ($Correo==$Correo_Recuperado)) {
-ini_set( 'display_errors', 1 );
-error_reporting( E_ALL );
-$from = "recuperar-clave@vivu.com.co";
-$to = $Correo.",recuperar-clave@vivu.com.co";
-$subject = "Restablecimiento de Clave";
-$message = "Estimado usuario:
+if (!empty($_POST['txtCorreo'])) {
 
+	$sql="SELECT  count(password) As ConteoPass,email, password  FROM users WHERE email = '$Correo_Electronico'";
+	$result_login = mysqli_fetch_row(mysqli_query($conexion,$sql));
+	$user = null;
+  
+	if (count($result_login) > 0) {
+	  $user = $result_login;
+	}
 
-Usted ha solicitado el restablecimiento de su contraseña en VIVU SENA. 
-Para ingresar por favor introduce la siguiente clave: ".$Clave_Recuperada.", en 
-el siguiente enlace: http://vivu.com.co/sign_in.php, recuerda
-que tu usuario es tú correo electrónico: ".$Correo."
+}
 
 
+$Clave_Recuperada=$user[2];
+$Correo_Recuperado=$user[1];
+$Conteo=$user[0];
+
+if (($Conteo>0) && ($Correo_Electronico==$Correo_Recuperado)) {
+  ini_set( 'display_errors', 1 );
+  error_reporting( E_ALL );
+  $from = "recuperar-clave@vivu.com.co";
+  $to = $Correo_Electronico.",recuperar-clave@vivu.com.co";
+  $subject = "Restablecimiento de Clave";
+  $message = "Estimado usuario:
 
 
-**********************NO RESPONDER - Mensaje Generado Automáticamente**********************
+  Usted ha solicitado el restablecimiento de su contraseña en VIVU SENA. 
+  Para ingresar por favor introduce la siguiente clave: ".$Clave_Recuperada.", en 
+  el siguiente enlace: http://vivu.com.co/sign_in.php, recuerda
+  que tu usuario es tú correo electrónico: ".$Correo_Electronico."
 
-Este correo es únicamente informativo y es de uso exclusivo del destinatario(a), puede contener información privilegiada y/o confidencial. Si no es usted el destinatario(a) deberá borrarlo inmediatamente. Queda notificado que el mal uso, divulgación no autorizada, alteración y/o  modificación malintencionada sobre este mensaje y sus anexos quedan estrictamente prohibidos y pueden ser legalmente sancionados. -El SENA  no asume ninguna responsabilidad por estas circunstancias-";
-$headers = "From:" . $from;
-mail($to,$subject,$message, $headers);
+
+
+
+  **********************NO RESPONDER - Mensaje Generado Automáticamente**********************
+
+  Este correo es únicamente informativo y es de uso exclusivo del destinatario(a), puede contener información privilegiada y/o confidencial. Si no es usted el destinatario(a) deberá borrarlo inmediatamente. Queda notificado que el mal uso, divulgación no autorizada, alteración y/o  modificación malintencionada sobre este mensaje y sus anexos quedan estrictamente prohibidos y pueden ser legalmente sancionados. -El SENA  no asume ninguna responsabilidad por estas circunstancias-";
+  $headers = "From:" . $from;
+  mail($to,$subject,$message, $headers);
 
   echo "<script>alert('Su contraseña ha sido enviada a su correo electrónico, por favor entre 5 minutos verifique e inicie sesión.');window.location='sign_in.php';</script>";
 }else{

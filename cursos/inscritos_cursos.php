@@ -20,7 +20,7 @@ if (isset($_SESSION['user_id'])) {
 }
 
 $CC = $_GET['id'];
-$nombreC = mysqli_fetch_row(mysqli_query($conexion, "SELECT curso FROM cursos where codigo_curso=$CC"))[0];
+$nombreC = mysqli_fetch_row(mysqli_query($conexion, "SELECT curso FROM cursos where id=$CC"))[0];
 
 $nombre_carpeta = "cursos";
 
@@ -42,7 +42,6 @@ $nombre_carpeta = "cursos";
 
   <link rel="stylesheet" media="all" href="../assets/general.css" data-turbolinks-track="reload" />
   <link rel="stylesheet" media="screen" href="../assets/grupos.css" />
-  <script src="http://www.vivu.com.co/assets/general.js" data-turbolinks-track="reload"></script>
   <?php require_once "scripts.php";  ?>
 
 
@@ -89,34 +88,31 @@ $nombre_carpeta = "cursos";
         <!-- ====== PopUpLogin ======-->
         <?php include '../popupLogin_admin.php'; ?>
     </div>
-
-	<div class="container">
-		<div class="row mt-1">
-			<div class="col-sm-12">
-				<div class="card">
-					<div class="card-header text-center">
-                        Inscritos En El Curso De <?php echo $nombreC; ?>
-					</div>
-					<div class="card-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <span class="btn btn-outline-primary btn-block" data-toggle="modal" data-target="#agregarnuevosdatosmodal">
-                                    <span class="fa  fa-file-excel-o"></span> Generar Excel
-                                </span>
-                            </div>
-                            <div class="col-md-6">
-                                <span class="btn btn-outline-primary btn-block" data-toggle="modal" data-target="#agregarnuevosdatosmodal">
-                                    <span class="fa fa-plus-square-o"></span> Cerrar curso
-                                </span>
-                            </div>                        
-                        </div>                        
-						<hr>
-						<div id="cargarCursos"></div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="container">
+      <div class="row mt-1">
+        <div class="col-sm-12">
+          <div class="card">
+            <div class="card-header text-center">
+                Inscritos En El Curso De <?php echo $nombreC; ?>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                      <a class="btn btn-outline-primary btn-block" href="../excel/report_inscritos.php?codigo=<?php echo $CC;?>"><span class="fa  fa-file-excel-o"></span> Generar Excel</a>
+                    </div>
+                    <div class="col-md-6">
+                        <span class="btn btn-outline-primary btn-block" onclick="btnVaciarCurso(<?php echo $CC;?>)">
+                            <span class="fa fa-plus-square-o"></span> Cerrar curso
+                        </span>
+                    </div>                        
+                </div>                        
+              <hr>
+              <div id="cargarCursos"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
 <?php endif; ?>
 
@@ -134,4 +130,64 @@ $nombre_carpeta = "cursos";
         var id = $("#id").val();
 		$('#cargarCursos').load('tabla_detalle_inscritos.php?id='+id);
 	});
+
+  function btnVaciarCurso(idCurso){
+		
+		const swalWithBootstrapButtons = Swal.mixin({
+		customClass: {
+			confirmButton: 'btn btn-outline-success',
+			cancelButton: 'btn btn-outline-danger'
+		},
+		buttonsStyling: false
+		})
+
+		swalWithBootstrapButtons.fire({
+		title: '¿Está seguro?',
+		text: "¡No podrás revertir esto!",
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonText: '¡Si, bórralo!',
+		cancelButtonText: '¡No, cancela!',
+		reverseButtons: true
+		}).then((result) => {
+		if (result.isConfirmed) {
+      	var datos = {
+			    "idCurso" : idCurso
+        };
+
+			$.ajax({
+        
+				type:"POST",
+				data: datos,
+				url:"procesos/vaciarCurso.php",
+				success:function(r){
+					if(r==1){
+						let valor = $('#id').val();
+						$('#cargarCursos').load('tabla_detalle_inscritos.php?id='+idCurso);
+						swalWithBootstrapButtons.fire(
+						'¡Eliminado!',
+						'El curso ha sido vaciado, se desactivará.',
+						'success'
+						)
+					}else{
+						swalWithBootstrapButtons.fire(
+						'¡Eliminado!',
+						'El curso no pudo ser vaciado.',
+						'error'
+						)
+					}
+				}
+			});
+			
+		} else if (
+			result.dismiss === Swal.DismissReason.cancel
+		) {
+			swalWithBootstrapButtons.fire(
+			'Cancelado',
+			'El curso está seguro, ha cancelado la eliminación.',
+			'error'
+			)
+		}
+		});
+	}
 </script>

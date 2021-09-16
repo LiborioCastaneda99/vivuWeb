@@ -19,8 +19,14 @@ if (isset($_SESSION['user_id'])) {
 	  $user = $result_login;
 	}
 }
+
+if($_GET['name_group'] == "Salud"){
+	$group = "Salud Ocupacional";
+}else{
+	$group = $_GET['name_group'];
+}
 $tildes = $conexion->query("SET NAMES 'utf8'");
-$sql="SELECT id, codigo_curso, curso, jornada, horario, intensidad, fecha_inicio, municipio, direccion, formacion, centro, descripcion, nombre_grupo, estado FROM cursos where nombre_grupo='".$_GET['name_group']."' and estado='Activo'";
+$sql="SELECT id, codigo_curso, curso, jornada, horario, intensidad, fecha_inicio, municipio, direccion, formacion, centro, descripcion, nombre_grupo, estado FROM cursos where estado='Activo' AND nombre_grupo='$group'";
 $result=mysqli_query($conexion,$sql);
 
 ?>
@@ -76,8 +82,9 @@ $result=mysqli_query($conexion,$sql);
 								</td>
 							<?php elseif(!empty($user) && ($user[9]=='2')): ?>
 								<?php 
-									$eCurso = mysqli_fetch_row(mysqli_query($conexion, "SELECT estado FROM y_inscritos_cursos where id_usuario='$user[0]' and id_curso='$mostrar[0]'"))[0];
-                          		?>
+									$eCurso = mysqli_fetch_row(mysqli_query($conexion, "SELECT estado FROM y_inscritos_cursos where id_usuario='$user[0]' and id_curso='$mostrar[0]' order by id desc limit 1"))[0];
+								
+								?>
 								<td style="text-align: center;" >
 									<!-- Estado inscrito -->
 									<?php if(($eCurso == 1)): ?>
@@ -90,6 +97,15 @@ $result=mysqli_query($conexion,$sql);
 										</span>
 									<?php endif; ?>
 
+									<span class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#modalVer" onclick="">
+										<span class="fa fa-eye"></span>
+									</span>
+								</td>
+							<?php elseif(!empty($user) && ($user[9]=='3')): ?>
+								<?php 
+									$eCurso = mysqli_fetch_row(mysqli_query($conexion, "SELECT estado FROM y_inscritos_cursos where id_usuario='$user[0]' and id_curso='$mostrar[0]'"))[0];
+                          		?>
+								<td style="text-align: center;" >
 									<span class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#modalVer" onclick="">
 										<span class="fa fa-eye"></span>
 									</span>

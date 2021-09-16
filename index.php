@@ -177,7 +177,7 @@ $nombre_carpeta = "";
               <p>La certificación por competencias u oficios es un programa orientado a desempeñar oficios y ocupaciones, basados en su experiencia y el desempeño actual de sus habilidades en un campo especifico, guiándolo a través del proceso de certificación, con lo cual le garantiza al sector productivo que es un aliado integral no solo competente en su saber y hacer, sino también en su ser.</p>
             </div>
             <div class="button">
-              <a href="competencias.php" class="Link">Inscribirse</a>
+              <a href="certificacion_competencias.php" class="Link">Inscribirse</a>
             </div>
           </div>
         </div>
@@ -312,7 +312,7 @@ $nombre_carpeta = "";
               <p>La certificación por competencias u oficios es un programa orientado a desempeñar oficios y ocupaciones, basados en su experiencia y el desempeño actual de sus habilidades en un campo especifico, guiándolo a través del proceso de certificación, con lo cual le garantiza al sector productivo que es un aliado integral no solo competente en su saber y hacer, sino también en su ser.</p>
             </div>
             <div class="button">
-              <a href="competencias.php" class="Link">Inscribirse</a>
+              <a href="certificacion_competencias.php" class="Link">Inscribirse</a>
             </div>
           </div>
         </div>
@@ -445,7 +445,7 @@ $nombre_carpeta = "";
                 <p>La certificación por competencias u oficios es un programa orientado a desempeñar oficios y ocupaciones, basados en su experiencia y el desempeño actual de sus habilidades en un campo especifico, guiándolo a través del proceso de certificación, con lo cual le garantiza al sector productivo que es un aliado integral no solo competente en su saber y hacer, sino también en su ser.</p>
               </div>
               <div class="button">
-                <a href="competencias.php" class="Link">Inscribirse</a>
+                <a href="certificacion_competencias.php" class="Link">Inscribirse</a>
               </div>
             </div>
           </div>

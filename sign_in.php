@@ -1,30 +1,41 @@
-<?php
-
+<?php 
 session_start();
+
+require_once "cursos/clases/conexion.php";
+$obj= new conectar();
+$conexion=$obj->conexion();
+$tildes = $conexion->query("SET NAMES 'utf8'");
+
+$Correo_Electronico=$_POST['email'];
 
 if (isset($_SESSION['user_id'])) {
   header('Location: micuenta.php');
 }
-require 'database.php';
-$Correo_Electronico=$_POST['email'];
 
 if (!empty($_POST['email']) && !empty($_POST['password'])) {
-  $records = $conn->prepare('SELECT id, nombres, apellidos, tipodocumento, documento, tipoPoblacion, email, password, fechaRegistro,rol, fecha_sesion, telefono, fechaNacimiento, municipio, sexo, img FROM users WHERE email = :email');
-  $records->bindParam(':email', $_POST['email']);
-  $records->execute();
-  $results = $records->fetch(PDO::FETCH_ASSOC);
 
-  $message = '';
+	$sql="SELECT id, nombres, apellidos, tipodocumento, documento, tipoPoblacion, email, password, 
+	fechaRegistro, rol, fecha_sesion, telefono, fechaNacimiento, municipio, sexo, img, centro 
+	FROM users WHERE email = '$Correo_Electronico'";
+	$result_login = mysqli_fetch_row(mysqli_query($conexion,$sql));
+	$user = null;
+  
+	if (count($result_login) > 0) {
+	  $user = $result_login;
+	}
 
-  if (count($results) > 0 && ($_POST['password']==$results['password'])) {
-    $_SESSION['user_id'] = $results['id'];
+  if (count($result_login) > 0 && ($_POST['password']==$user[7])) {
+    $_SESSION['user_id'] = $user[0];
+
     $fecha=date('y-m-d');
     include 'save-fecha-sesion.php';
 
     header("Location: micuenta.php");
+
   } else {
     echo "<script>alert('Lo sentimos, su correo o contraseña son erroneos, por favor verifique nuevamente su información y accede al aplicativo.');</script>";
   }
+
 }
 
 ?>
@@ -118,9 +129,9 @@ if (!empty($_POST['email']) && !empty($_POST['password'])) {
               </div>
             </div>
             <a  data-toggle="modal" data-target="#exampleModal"><i class="fa fa-key" aria-hidden="true"></i> ¿Olvidaste tu contraseña?</a>
-            <button class="btn btn-nar btn-lg" type="submit"> Iniciar sesión  </button><br>
+            <button class="btn btn-outline-primary btn-block" type="submit"> Iniciar sesión  </button>
           </form>  
-          <a href="sign_up.php" style="text-decoration: none; color: #fff; margin-right: 50px;"><button class="btn btn-nar btn-lg"> Registrarme</button></a>        
+          <a href="sign_up.php" class="btn btn-outline-primary btn-block">Registrarme</a>        
         </div>
       </div>
     </div>
@@ -132,34 +143,12 @@ if (!empty($_POST['email']) && !empty($_POST['password'])) {
     <span class="">Todos los derechos <?php echo '&copy'; echo date("Y"); ?>  SENA - Políticas de privacidad y condiciones uso Portal Web SENA</span>
   </div>
 </footer>
-<script>
-  var dummyContent = $('.dummy-content').children(),
-  i;
-
-
-  $('#add-content').click(function(e){
-    e.preventDefault();
-
-    if($(dummyContent[0]).is(":visible")){
-      for(i=0;i<dummyContent.length;i++){
-        $(dummyContent[i]).fadeOut(600);
-      }
-    }
-    else{
-      for(i=0;i<dummyContent.length;i++){
-        $(dummyContent[i]).delay(600*i).fadeIn(600);
-      }
-    }
-
-  });
-</script>
 <!-- Demo ads. Please ignore and remove. -->
 <script src="http://cdn.tutorialzine.com/misc/enhance/v2.js" async></script>
-
 <!-- ====== Pie de pagina ======-->
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script src="assets/main.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<link rel="stylesheet" href="assets/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js" integrity="sha384-XTs3FgkjiBgo8qjEjBk0tGmf3wPrWtA6coPfQDfFEY8AnYJwjalXCiosYRBIBZX8" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>

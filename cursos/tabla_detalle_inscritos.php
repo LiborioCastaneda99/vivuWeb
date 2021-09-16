@@ -21,11 +21,13 @@ if (isset($_SESSION['user_id'])) {
 }
 $CC = $_GET['id'];
 $tildes = $conexion->query("SET NAMES 'utf8'");
-$sql="SELECT users.nombres, users.apellidos, users.tipodocumento, users.documento, users.tipoPoblacion, users.email, users.telefono, users.fechaRegistro, `inscritos-cursos`.`codigo_curso` As codigoCurso,`inscritos-cursos`.`id` As id_inscrito FROM users,`inscritos-cursos` WHERE users.documento=`inscritos-cursos`.`documento` and `inscritos-cursos`.codigo_curso=$CC and `inscritos-cursos`.estado='Inscrito'";
+$sql="SELECT U.nombres, U.apellidos, U.tipodocumento, U.documento, U.tipoPoblacion, U.email, U.telefono, YIC.fecha_reg, YIC.id_curso As codigoCurso, YIC.`id` As id_inscrito, U.id As idUser 
+FROM y_inscritos_cursos YIC 
+INNER JOIN users U ON U.id = YIC.id_usuario WHERE YIC.estado = 1 AND YIC.id_curso = $CC";
 $result=mysqli_query($conexion,$sql);
 
 ?>
-
+<input type="hidden" id="id" name="" value="<?php echo $CC; ?>">
 <div >
 	<div class="table-responsive">
 
@@ -57,7 +59,11 @@ $result=mysqli_query($conexion,$sql);
 							<td><?php echo strtoupper($mostrar[6]); ?></td>
 							<td><?php echo strtoupper($mostrar[5]); ?></td>
 							<td><?php echo strtoupper($mostrar[7]); ?></td>
-							<td>Eliminar</td>
+							<td>
+								<span class="btn btn-outline-danger btn-sm" onclick="btnEliminarAprendiz(<?php echo $mostrar[9];?>,<?php echo $CC;?>)">
+									<span class="fa fa-trash"></span>
+								</span>
+							</td>
                            
 						</tr>
 					<?php 
@@ -69,6 +75,68 @@ $result=mysqli_query($conexion,$sql);
 </div>
 
 <script type="text/javascript">
+
+
+function btnEliminarAprendiz(id, idCurso){
+		
+		const swalWithBootstrapButtons = Swal.mixin({
+		customClass: {
+			confirmButton: 'btn btn-outline-success',
+			cancelButton: 'btn btn-outline-danger'
+		},
+		buttonsStyling: false
+		})
+
+		swalWithBootstrapButtons.fire({
+		title: '¿Está seguro?',
+		text: "¡No podrás revertir esto!",
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonText: '¡Si, bórralo!',
+		cancelButtonText: '¡No, cancela!',
+		reverseButtons: true
+		}).then((result) => {
+		if (result.isConfirmed) {
+      	var datos = {
+			"id" : id,
+			"idCurso" : idCurso
+        };
+
+			$.ajax({
+        
+				type:"POST",
+				data: datos,
+				url:"procesos/eliminar_arendiz_curso.php",
+				success:function(r){
+					if(r==1){
+						let valor = $('#id').val();
+						$('#cargarCursos').load('tabla_detalle_inscritos.php?id='+idCurso);
+						swalWithBootstrapButtons.fire(
+						'¡Eliminado!',
+						'El aprendiz ha sido eliminado del curso.',
+						'success'
+						)
+					}else{
+						swalWithBootstrapButtons.fire(
+						'¡Eliminado!',
+						'El aprendiz no ha sido eliminado.',
+						'error'
+						)
+					}
+				}
+			});
+			
+		} else if (
+			result.dismiss === Swal.DismissReason.cancel
+		) {
+			swalWithBootstrapButtons.fire(
+			'Cancelado',
+			'El curso está seguro, ha cancelado la eliminación.',
+			'error'
+			)
+		}
+		});
+	}
 
 	$(document).ready(function() {
 		$('#cargarCursosOfertados').DataTable();

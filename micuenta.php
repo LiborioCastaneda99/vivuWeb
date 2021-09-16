@@ -100,15 +100,54 @@ if (isset($_SESSION['user_id'])) {
 
   <div class="text-center"><br>
     <p class="font-weight-bold">Hola, <?php echo $user[1]." ".$user[2]."."; ?></p>
-    <img src="assets/img/imgPortadaBienvenido.png" class="img-fluid" alt="">
-  </div>
+    <?php if (in_array($user[9], [1,3,4,5])): ?>
+
+      <div class="container">
+        <div class="row">
+          <div class="card-group">
+            <div class="card">
+              <img class="card-img-top" src="https://www.visionbanks.com/wp-content/uploads/OpenAnAccount_Icon.png" alt="Card image cap">
+              <div class="card-body">
+                <h5 class="card-title">Cambiar información del aprendiz</h5>
+                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+              </div>
+              <div class="card-footer">
+                <a href="cursos/actualizar_perfil.php" class="mt-1 btn btn-primary">Ir</a>
+              </div>
+            </div>
+            <div class="card">              
+              <img class="card-img-top" src="https://www.visionbanks.com/wp-content/uploads/OpenAnAccount_Icon.png" alt="Card image cap">
+              <div class="card-body">
+                <h5 class="card-title">Inscribir aprendiz en curso</h5>
+                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+              </div>
+              <div class="card-footer">
+                <a href="cursos/inscribir_aprendiz.php" class="mt-1 btn btn-primary">Ir</a>
+              </div>
+            </div>
+            <div class="card">
+              <img class="card-img-top" src="https://www.visionbanks.com/wp-content/uploads/OpenAnAccount_Icon.png" alt="Card image cap">
+              <div class="card-body">
+                <h5 class="card-title">Registrar aprendiz</h5>
+                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+              </div>
+              <div class="card-footer">
+                <a href="registrar_aprendices.php" class="mt-1 btn btn-primary">Ir</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <?php elseif ($user[9]=='2'): ?>
+      <img src="assets/img/imgPortadaBienvenido.png" class="img-fluid" alt="">
+    <?php endif; ?>
 
 <?php else: ?>
     
   <?php echo "<script>window.location='sign_in.php';</script>"; ?>
 
 <?php endif; ?>
-<footer class="footer_new">
+<footer class="footer_new mt-2">
   <div class="container">
     <span class="">Todos los derechos <?php echo '&copy'; echo date("Y"); ?>  SENA - Políticas de privacidad y condiciones uso Portal Web SENA</span>
   </div>
