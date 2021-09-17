@@ -32,6 +32,10 @@ $nombre_carpeta = "";
   <meta property="og:title" content="Inicio | Oferta Complementaria">
   <meta name="csrf-param" content="authenticity_token" />
   <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
+  
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
   <meta name="csrf-token" content="sD0hPoBuliGFd5InGhre2tEwqBOWq5IyYKAr5Wcj/6NdVI39jnyEqFx6JUMBQiSF2YRkJZbYZjp8VUo/qVtfog==" />
   <link rel="stylesheet" media="all" href="assets/general.css" data-turbolinks-track="reload" />
@@ -48,9 +52,52 @@ $nombre_carpeta = "";
     background-color: #FF6C00;
     color: white;
   }
+  .modal {
+  text-align: center;
+  padding: 0!important;
+}
+
+.modal:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -4px;
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+
+
 </style>
+
+<script>
+  $( document ).ready(function() {
+    $('#exampleModalCenter').modal('toggle')
+});
+
+  </script>
 </head>
 <body>
+
+<!-- Modal HTML -->
+<div id="exampleModalCenter" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content" style=" background-color: transparent;
+
+">
+            <div class="modal-body">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+
+              <a href="noticias.php"><img src="assets/img/imgAlert.jpg" class="img-fluid"/></a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <?php if(!empty($user) && ($user[9]=='2')): ?>
   <!-- ====== Barra de navegacion ======-->
   <?php include 'header_aprendiz.php'; ?>

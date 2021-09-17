@@ -126,21 +126,21 @@ if (isset($_SESSION['user_id'])) {
           </ol>
           <div class="carousel-inner">
           <div class="carousel-item active">
-              <img class="d-block w-100" src="assets/img/img_1_.jpeg" alt="First slide">
+              <img class="d-block w-100" src="assets/img/slider_0.jpg" alt="First slide">
               <div class="carousel-caption d-none d-md-block">
               <h5></h5>
               <p></p>
               </div>
           </div>
           <div class="carousel-item">
-              <img class="d-block w-100" src="assets/img/img_2_.jpeg" alt="First slide">
+              <img class="d-block w-100" src="assets/img/slider_1.jpg" alt="First slide">
               <div class="carousel-caption d-none d-md-block">
               <h5></h5>
               <p></p>
               </div>
           </div>
           <div class="carousel-item">
-              <img class="d-block w-100" src="assets/img/img_3_.jpeg" alt="Second slide">
+              <img class="d-block w-100" src="assets/img/slider_2.jpg" alt="Second slide">
               <div class="carousel-caption d-none d-md-block">
               <h5></h5>
               <p></p>
@@ -154,7 +154,7 @@ if (isset($_SESSION['user_id'])) {
               </div>
           </div>
           <div class="carousel-item">
-              <img class="d-block w-100" src="assets/img/img_5_.jpeg" alt="Third slide">
+              <img class="d-block w-100" src="assets/img/slider_4.jpg" alt="Third slide">
               <div class="carousel-caption d-none d-md-block">
               <h5></h5>
               <p></p>
@@ -269,21 +269,21 @@ if (isset($_SESSION['user_id'])) {
           </ol>
           <div class="carousel-inner">
           <div class="carousel-item active">
-              <img class="d-block w-100" src="assets/img/img_1_.jpeg" alt="First slide">
+              <img class="d-block w-100" src="assets/img/slider_0.jpg" alt="First slide">
               <div class="carousel-caption d-none d-md-block">
               <h5></h5>
               <p></p>
               </div>
           </div>
           <div class="carousel-item">
-              <img class="d-block w-100" src="assets/img/img_2_.jpeg" alt="First slide">
+              <img class="d-block w-100" src="assets/img/slider_1.jpg" alt="First slide">
               <div class="carousel-caption d-none d-md-block">
               <h5></h5>
               <p></p>
               </div>
           </div>
           <div class="carousel-item">
-              <img class="d-block w-100" src="assets/img/img_3_.jpeg" alt="Second slide">
+              <img class="d-block w-100" src="assets/img/slider_2.jpg" alt="Second slide">
               <div class="carousel-caption d-none d-md-block">
               <h5></h5>
               <p></p>
